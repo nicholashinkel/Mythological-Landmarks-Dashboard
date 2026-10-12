@@ -1,0 +1,1421 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mythical Landmarks</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" crossorigin=""/>
+    <link href="https://fonts.googleapis.com/css2?family=Sansita:wght@400;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" crossorigin=""></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body { font-family: Sansita, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; color: #333; }
+        h1 { text-align: center; color: #2288b3; margin-bottom: 30px; }
+        .dashboard-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 20px; max-width: 1400px; margin: 20px auto; }
+        .card { background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 20px; overflow: hidden; }
+        .card h2 { margin-top: 0; color: #2288b3; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
+        .card p {margin-bottom: 12px; color: #666; font-size: 14px;}
+        .map-container { height: 400px; width: 100%; }
+        .plotly-graph { width: 100%; min-height: 520px; }
+        .plotly-map { width: 100%; min-height: 650px; }
+        .graph-container { width: 100%; height: 700px; border: none; }
+        .full-width { grid-column: 1 / -1; }
+    </style>
+</head>
+<body>
+    <h1>Mythical Landmarks</h1>
+    <div class="dashboard-container">
+
+      <div class="card full-width">
+            <h2>Dashboard Goal:</h2>
+            <p>This dashboard uses a dataset containing information about prominent characters from the Odyssey.
+            The goal is to display connections between mythological characters and locations they have visited in a fun, and interactive way. Note that mythological locations are represented using their commonly associated physical location.</p>
+        </div>
+
+
+        <div class="card">
+            <h2>All Landmarks</h2>
+            <p>Map of all landmarks. Hover over points for location name and click for character names .</p>
+            <div class="map-container">
+                <div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><span style="color:#565656">Make this Notebook Trusted to load map: File -> Trust Notebook</span><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    
+    &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://code.jquery.com/jquery-3.7.1.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js&quot;&gt;&lt;/script&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css&quot;/&gt;
+    
+            &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
+            &lt;style&gt;
+                #map_5b6efffa9686e7ea3656b19dcf895ffb {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            &lt;/style&gt;
+
+            &lt;style&gt;html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            &lt;/style&gt;
+
+            &lt;style&gt;#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            &lt;/style&gt;
+
+            &lt;script&gt;
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            &lt;/script&gt;
+
+        
+&lt;/head&gt;
+&lt;body&gt;
+    
+    
+            &lt;div class=&quot;folium-map&quot; id=&quot;map_5b6efffa9686e7ea3656b19dcf895ffb&quot; &gt;&lt;/div&gt;
+        
+&lt;/body&gt;
+&lt;script&gt;
+    
+    
+            var map_5b6efffa9686e7ea3656b19dcf895ffb = L.map(
+                &quot;map_5b6efffa9686e7ea3656b19dcf895ffb&quot;,
+                {
+                    center: [37.6202843030303, 19.3768853030303],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  &quot;zoom&quot;: 5,
+  &quot;zoomControl&quot;: true,
+  &quot;preferCanvas&quot;: false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_bc23e8fb0075273e691e4f9e5524cb5f = L.tileLayer(
+                &quot;https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png?key=cb1_4fn5_1_b37d4d754a04f6628474849f\u0026v=1791567284&quot;,
+                {
+  &quot;minZoom&quot;: 0,
+  &quot;maxZoom&quot;: 18,
+  &quot;maxNativeZoom&quot;: 18,
+  &quot;noWrap&quot;: false,
+  &quot;attribution&quot;: &quot;\u00a9 OpenStreetMap contributors \u00a9 CARTO&quot;,
+  &quot;subdomains&quot;: &quot;abc&quot;,
+  &quot;detectRetina&quot;: false,
+  &quot;tms&quot;: false,
+  &quot;opacity&quot;: 1,
+}
+
+            );
+        
+    
+            tile_layer_bc23e8fb0075273e691e4f9e5524cb5f.addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+    
+            var circle_marker_25b292ce0ef6b2b33983fd52ceab16b7 = L.circleMarker(
+                [41.237951, 13.04573],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+    
+        var popup_e7cf59fbae5c1bfa36ba5a75a10fcba3 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_1653f5fad792a05f7812e73480229d09 = $(`&lt;div id=&quot;html_1653f5fad792a05f7812e73480229d09&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus, Circe&lt;/div&gt;`)[0];
+                popup_e7cf59fbae5c1bfa36ba5a75a10fcba3.setContent(html_1653f5fad792a05f7812e73480229d09);
+            
+        
+
+        circle_marker_25b292ce0ef6b2b33983fd52ceab16b7.bindPopup(popup_e7cf59fbae5c1bfa36ba5a75a10fcba3)
+        ;
+
+        
+    
+    
+            circle_marker_25b292ce0ef6b2b33983fd52ceab16b7.bindTooltip(
+                `&lt;div&gt;
+                     Aeaea
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_e0bbd68e922d0a25ca21d7cfbe528d0c = L.circleMarker(
+                [38.7917, 15.2139],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+    
+        var popup_f4ce1c05f3eddbe5960b9ea37791a1c0 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_6c9a999c148554f5e9f87e1e31d80060 = $(`&lt;div id=&quot;html_6c9a999c148554f5e9f87e1e31d80060&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_f4ce1c05f3eddbe5960b9ea37791a1c0.setContent(html_6c9a999c148554f5e9f87e1e31d80060);
+            
+        
+
+        circle_marker_e0bbd68e922d0a25ca21d7cfbe528d0c.bindPopup(popup_f4ce1c05f3eddbe5960b9ea37791a1c0)
+        ;
+
+        
+    
+    
+            circle_marker_e0bbd68e922d0a25ca21d7cfbe528d0c.bindTooltip(
+                `&lt;div&gt;
+                     Aeolia
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_537978c7f5d503851ee1ec0957eff794 = L.circleMarker(
+                [9.145, 40.4897],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+    
+        var popup_f62cba10c35cad543a31875efeb7154d = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_e24dcc54a5361f3a84b63c77f8a2a766 = $(`&lt;div id=&quot;html_e24dcc54a5361f3a84b63c77f8a2a766&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Poseidon&lt;/div&gt;`)[0];
+                popup_f62cba10c35cad543a31875efeb7154d.setContent(html_e24dcc54a5361f3a84b63c77f8a2a766);
+            
+        
+
+        circle_marker_537978c7f5d503851ee1ec0957eff794.bindPopup(popup_f62cba10c35cad543a31875efeb7154d)
+        ;
+
+        
+    
+    
+            circle_marker_537978c7f5d503851ee1ec0957eff794.bindTooltip(
+                `&lt;div&gt;
+                     Ethiopia
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_41fff4ad9aced6a25dec285bfb81ead8 = L.circleMarker(
+                [37.5, 14.0],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+    
+        var popup_c3a98a25f726361aa796f9e9628b3f80 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_be22145a7c89759337865aa2e5994b76 = $(`&lt;div id=&quot;html_be22145a7c89759337865aa2e5994b76&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_c3a98a25f726361aa796f9e9628b3f80.setContent(html_be22145a7c89759337865aa2e5994b76);
+            
+        
+
+        circle_marker_41fff4ad9aced6a25dec285bfb81ead8.bindPopup(popup_c3a98a25f726361aa796f9e9628b3f80)
+        ;
+
+        
+    
+    
+            circle_marker_41fff4ad9aced6a25dec285bfb81ead8.bindTooltip(
+                `&lt;div&gt;
+                     Helios Island
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_60dde37aa08867e2f45a9f77717a5ae5 = L.circleMarker(
+                [40.96, 25.37],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+    
+        var popup_cadce3050ec7fde5f7a7c7f688bc9bfd = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_51fdd7f48cf8bdad63be0ac188733bcb = $(`&lt;div id=&quot;html_51fdd7f48cf8bdad63be0ac188733bcb&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_cadce3050ec7fde5f7a7c7f688bc9bfd.setContent(html_51fdd7f48cf8bdad63be0ac188733bcb);
+            
+        
+
+        circle_marker_60dde37aa08867e2f45a9f77717a5ae5.bindPopup(popup_cadce3050ec7fde5f7a7c7f688bc9bfd)
+        ;
+
+        
+    
+    
+            circle_marker_60dde37aa08867e2f45a9f77717a5ae5.bindTooltip(
+                `&lt;div&gt;
+                     Ismarus
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_5996ca2186ff99f4504d3b14af595463 = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+    
+        var popup_e84a3f59e57f484ef22306d2bf50e426 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_fdd17d181f902ef4876a5adb23f3ebae = $(`&lt;div id=&quot;html_fdd17d181f902ef4876a5adb23f3ebae&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus, Athena, Telemachus, Penelope, Eumaeus, Antinous&lt;/div&gt;`)[0];
+                popup_e84a3f59e57f484ef22306d2bf50e426.setContent(html_fdd17d181f902ef4876a5adb23f3ebae);
+            
+        
+
+        circle_marker_5996ca2186ff99f4504d3b14af595463.bindPopup(popup_e84a3f59e57f484ef22306d2bf50e426)
+        ;
+
+        
+    
+    
+            circle_marker_5996ca2186ff99f4504d3b14af595463.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_9fd9f6d15f2214e79460f33e500d1c09 = L.circleMarker(
+                [37.5, 14.0],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+    
+        var popup_f361463267c78bacf16069b3e9de977b = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_09d3dcdfc5166d7bb483325d10c50754 = $(`&lt;div id=&quot;html_09d3dcdfc5166d7bb483325d10c50754&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_f361463267c78bacf16069b3e9de977b.setContent(html_09d3dcdfc5166d7bb483325d10c50754);
+            
+        
+
+        circle_marker_9fd9f6d15f2214e79460f33e500d1c09.bindPopup(popup_f361463267c78bacf16069b3e9de977b)
+        ;
+
+        
+    
+    
+            circle_marker_9fd9f6d15f2214e79460f33e500d1c09.bindTooltip(
+                `&lt;div&gt;
+                     Laestrygonians
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_870b996a40344b96a4dc0e310cb79cba = L.circleMarker(
+                [33.783333, 10.883333],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+    
+        var popup_6541be2da173bb3c63d38194ff133e85 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_05a41a397d08bd91436839b0927f0f9b = $(`&lt;div id=&quot;html_05a41a397d08bd91436839b0927f0f9b&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_6541be2da173bb3c63d38194ff133e85.setContent(html_05a41a397d08bd91436839b0927f0f9b);
+            
+        
+
+        circle_marker_870b996a40344b96a4dc0e310cb79cba.bindPopup(popup_6541be2da173bb3c63d38194ff133e85)
+        ;
+
+        
+    
+    
+            circle_marker_870b996a40344b96a4dc0e310cb79cba.bindTooltip(
+                `&lt;div&gt;
+                     Land of the Lotus-Eaters
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_0a27660be73197aa696d45510e429bec = L.circleMarker(
+                [36.0443, 14.2512],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+    
+        var popup_42beae9fcbdc055f0e649e6d606e3ed7 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_2a8762f833d2421f0074bbf2e536feb2 = $(`&lt;div id=&quot;html_2a8762f833d2421f0074bbf2e536feb2&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus, Calypso&lt;/div&gt;`)[0];
+                popup_42beae9fcbdc055f0e649e6d606e3ed7.setContent(html_2a8762f833d2421f0074bbf2e536feb2);
+            
+        
+
+        circle_marker_0a27660be73197aa696d45510e429bec.bindPopup(popup_42beae9fcbdc055f0e649e6d606e3ed7)
+        ;
+
+        
+    
+    
+            circle_marker_0a27660be73197aa696d45510e429bec.bindTooltip(
+                `&lt;div&gt;
+                     Ogygia
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_87fac32244b50b344b192fc3f914a581 = L.circleMarker(
+                [40.0834, 22.3499],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+    
+        var popup_86ff1b98232b2047517ed12007eac853 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_6ff232e293af3066d1127ca9e5ac2517 = $(`&lt;div id=&quot;html_6ff232e293af3066d1127ca9e5ac2517&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Athena, Zeus&lt;/div&gt;`)[0];
+                popup_86ff1b98232b2047517ed12007eac853.setContent(html_6ff232e293af3066d1127ca9e5ac2517);
+            
+        
+
+        circle_marker_87fac32244b50b344b192fc3f914a581.bindPopup(popup_86ff1b98232b2047517ed12007eac853)
+        ;
+
+        
+    
+    
+            circle_marker_87fac32244b50b344b192fc3f914a581.bindTooltip(
+                `&lt;div&gt;
+                     Olympus
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_dfeaf42bea5887ab8063dc0774d0cc96 = L.circleMarker(
+                [36.9131, 21.6963],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+    
+        var popup_90372b0b21f653acd7c10279fc8fee31 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_47b58095a2cd34aea11b74ea48a51809 = $(`&lt;div id=&quot;html_47b58095a2cd34aea11b74ea48a51809&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Telemachus&lt;/div&gt;`)[0];
+                popup_90372b0b21f653acd7c10279fc8fee31.setContent(html_47b58095a2cd34aea11b74ea48a51809);
+            
+        
+
+        circle_marker_dfeaf42bea5887ab8063dc0774d0cc96.bindPopup(popup_90372b0b21f653acd7c10279fc8fee31)
+        ;
+
+        
+    
+    
+            circle_marker_dfeaf42bea5887ab8063dc0774d0cc96.bindTooltip(
+                `&lt;div&gt;
+                     Pylos
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_882a876e9d323df81e79467c024c965c = L.circleMarker(
+                [39.625, 19.9223],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+    
+        var popup_52e1a2cb513ded01884e8f3125db876b = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_c5b1a00cbef56f25e1bfc3950256e581 = $(`&lt;div id=&quot;html_c5b1a00cbef56f25e1bfc3950256e581&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus, Athena, Poseidon, Nausicaa&lt;/div&gt;`)[0];
+                popup_52e1a2cb513ded01884e8f3125db876b.setContent(html_c5b1a00cbef56f25e1bfc3950256e581);
+            
+        
+
+        circle_marker_882a876e9d323df81e79467c024c965c.bindPopup(popup_52e1a2cb513ded01884e8f3125db876b)
+        ;
+
+        
+    
+    
+            circle_marker_882a876e9d323df81e79467c024c965c.bindTooltip(
+                `&lt;div&gt;
+                     Scheria
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_61b213e281b07ad57ac85bb6b402f426 = L.circleMarker(
+                [38.2458, 15.6325],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+    
+        var popup_7404bd70228a3834c40e828862a8bdde = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_a5aac0d8a5e5a0d466aa9a4948c1abc8 = $(`&lt;div id=&quot;html_a5aac0d8a5e5a0d466aa9a4948c1abc8&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_7404bd70228a3834c40e828862a8bdde.setContent(html_a5aac0d8a5e5a0d466aa9a4948c1abc8);
+            
+        
+
+        circle_marker_61b213e281b07ad57ac85bb6b402f426.bindPopup(popup_7404bd70228a3834c40e828862a8bdde)
+        ;
+
+        
+    
+    
+            circle_marker_61b213e281b07ad57ac85bb6b402f426.bindTooltip(
+                `&lt;div&gt;
+                     Scylla &amp; Charybdis
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_f43dd32b6089717056eb44458f9d41eb = L.circleMarker(
+                [40.58, 14.43],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+    
+        var popup_11b5ace1fa459c87a10edfe3af5a199d = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_9404280725d3bd7dfe40bcd3b15f7ad0 = $(`&lt;div id=&quot;html_9404280725d3bd7dfe40bcd3b15f7ad0&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_11b5ace1fa459c87a10edfe3af5a199d.setContent(html_9404280725d3bd7dfe40bcd3b15f7ad0);
+            
+        
+
+        circle_marker_f43dd32b6089717056eb44458f9d41eb.bindPopup(popup_11b5ace1fa459c87a10edfe3af5a199d)
+        ;
+
+        
+    
+    
+            circle_marker_f43dd32b6089717056eb44458f9d41eb.bindTooltip(
+                `&lt;div&gt;
+                     Sirens Water
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_3a8c8eb06e8f19ffb04669ea63f5bb30 = L.circleMarker(
+                [37.04, 22.43],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+    
+        var popup_acd81b386a092c6ef8efead1cd67d75a = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_6436bb0d2d6cc1b3ebd05762752c4e4f = $(`&lt;div id=&quot;html_6436bb0d2d6cc1b3ebd05762752c4e4f&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Telemachus, Menelaus, Helen&lt;/div&gt;`)[0];
+                popup_acd81b386a092c6ef8efead1cd67d75a.setContent(html_6436bb0d2d6cc1b3ebd05762752c4e4f);
+            
+        
+
+        circle_marker_3a8c8eb06e8f19ffb04669ea63f5bb30.bindPopup(popup_acd81b386a092c6ef8efead1cd67d75a)
+        ;
+
+        
+    
+    
+            circle_marker_3a8c8eb06e8f19ffb04669ea63f5bb30.bindTooltip(
+                `&lt;div&gt;
+                     Sparta
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_93813432661582bb6e9028f576a16684 = L.circleMarker(
+                [37.7518, 14.9947],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+    
+        var popup_0bf06f10034c9297ba66f4ac8a11ea6a = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_fad4013ec3a8aa0588fab2f56f4310f4 = $(`&lt;div id=&quot;html_fad4013ec3a8aa0588fab2f56f4310f4&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus, Polyphemus&lt;/div&gt;`)[0];
+                popup_0bf06f10034c9297ba66f4ac8a11ea6a.setContent(html_fad4013ec3a8aa0588fab2f56f4310f4);
+            
+        
+
+        circle_marker_93813432661582bb6e9028f576a16684.bindPopup(popup_0bf06f10034c9297ba66f4ac8a11ea6a)
+        ;
+
+        
+    
+    
+            circle_marker_93813432661582bb6e9028f576a16684.bindTooltip(
+                `&lt;div&gt;
+                     The Cyclopes
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_de8f55ab72883a1a8fcc782d4d5339ba = L.circleMarker(
+                [39.236111, 20.476111],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+    
+        var popup_1c6c26b8af14195ee101df9b1931f4d2 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_cc09a05e8ff3b152201f788d1a3fc65e = $(`&lt;div id=&quot;html_cc09a05e8ff3b152201f788d1a3fc65e&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_1c6c26b8af14195ee101df9b1931f4d2.setContent(html_cc09a05e8ff3b152201f788d1a3fc65e);
+            
+        
+
+        circle_marker_de8f55ab72883a1a8fcc782d4d5339ba.bindPopup(popup_1c6c26b8af14195ee101df9b1931f4d2)
+        ;
+
+        
+    
+    
+            circle_marker_de8f55ab72883a1a8fcc782d4d5339ba.bindTooltip(
+                `&lt;div&gt;
+                     The Underworld
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_deab3dfd361f5ad1f0ca1a0cd4ba3955 = L.circleMarker(
+                [39.9575, 26.2389],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+    
+        var popup_6cf06965bc0382e8ad8d7132befe557e = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_b0fa15447b2bcce696c00c0bd8082206 = $(`&lt;div id=&quot;html_b0fa15447b2bcce696c00c0bd8082206&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_6cf06965bc0382e8ad8d7132befe557e.setContent(html_b0fa15447b2bcce696c00c0bd8082206);
+            
+        
+
+        circle_marker_deab3dfd361f5ad1f0ca1a0cd4ba3955.bindPopup(popup_6cf06965bc0382e8ad8d7132befe557e)
+        ;
+
+        
+    
+    
+            circle_marker_deab3dfd361f5ad1f0ca1a0cd4ba3955.bindTooltip(
+                `&lt;div&gt;
+                     Troy
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            tile_layer_bc23e8fb0075273e691e4f9e5524cb5f.addTo(map_5b6efffa9686e7ea3656b19dcf895ffb);
+        
+&lt;/script&gt;
+&lt;/html&gt;" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Physical VS Mythological</h2>
+            <p>Red points mark mythical locations & purple points marks physical locations.</p>
+            <div class="map-container">
+                <div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><span style="color:#565656">Make this Notebook Trusted to load map: File -> Trust Notebook</span><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    
+    &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://code.jquery.com/jquery-3.7.1.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js&quot;&gt;&lt;/script&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css&quot;/&gt;
+    
+            &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
+            &lt;style&gt;
+                #map_9b96f3ee0e254e5c091e96f93b7c5aea {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            &lt;/style&gt;
+
+            &lt;style&gt;html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            &lt;/style&gt;
+
+            &lt;style&gt;#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            &lt;/style&gt;
+
+            &lt;script&gt;
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            &lt;/script&gt;
+
+        
+&lt;/head&gt;
+&lt;body&gt;
+    
+    
+            &lt;div class=&quot;folium-map&quot; id=&quot;map_9b96f3ee0e254e5c091e96f93b7c5aea&quot; &gt;&lt;/div&gt;
+        
+&lt;/body&gt;
+&lt;script&gt;
+    
+    
+            var map_9b96f3ee0e254e5c091e96f93b7c5aea = L.map(
+                &quot;map_9b96f3ee0e254e5c091e96f93b7c5aea&quot;,
+                {
+                    center: [37.6202843030303, 19.3768853030303],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  &quot;zoom&quot;: 5,
+  &quot;zoomControl&quot;: true,
+  &quot;preferCanvas&quot;: false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_6658b099e3e5293c722000f49c88e495 = L.tileLayer(
+                &quot;https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png?key=cb1_4fn5_1_b37d4d754a04f6628474849f&quot;,
+                {
+  &quot;minZoom&quot;: 0,
+  &quot;maxZoom&quot;: 18,
+  &quot;maxNativeZoom&quot;: 18,
+  &quot;noWrap&quot;: false,
+  &quot;attribution&quot;: &quot;\u00a9 OpenStreetMap contributors \u00a9 CARTO&quot;,
+  &quot;subdomains&quot;: &quot;abc&quot;,
+  &quot;detectRetina&quot;: false,
+  &quot;tms&quot;: false,
+  &quot;opacity&quot;: 1,
+}
+
+            );
+        
+    
+            tile_layer_6658b099e3e5293c722000f49c88e495.addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            var circle_marker_311093f728ece5504da91c2c2262e96c = L.circleMarker(
+                [39.9575, 26.2389],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_311093f728ece5504da91c2c2262e96c.bindTooltip(
+                `&lt;div&gt;
+                     Troy : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_5f827a2853ed0612b06568074167752f = L.circleMarker(
+                [40.96, 25.37],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_5f827a2853ed0612b06568074167752f.bindTooltip(
+                `&lt;div&gt;
+                     Ismarus : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_ebec3779135e49c8b4fa739bc8b719a7 = L.circleMarker(
+                [33.783333, 10.883333],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_ebec3779135e49c8b4fa739bc8b719a7.bindTooltip(
+                `&lt;div&gt;
+                     Land of the Lotus-Eaters : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_80b1e7106393aea43ea6f5186e65afad = L.circleMarker(
+                [37.7518, 14.9947],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_80b1e7106393aea43ea6f5186e65afad.bindTooltip(
+                `&lt;div&gt;
+                     The Cyclopes : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_28dec9dd109bf3f395f5475cb79f36a2 = L.circleMarker(
+                [38.7917, 15.2139],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_28dec9dd109bf3f395f5475cb79f36a2.bindTooltip(
+                `&lt;div&gt;
+                     Aeolia : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_43d41fdee11eb7287f8836cb8e71d7c0 = L.circleMarker(
+                [37.5, 14.0],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_43d41fdee11eb7287f8836cb8e71d7c0.bindTooltip(
+                `&lt;div&gt;
+                     Laestrygonians : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_7145106c12674ce57302de9038405f8b = L.circleMarker(
+                [41.237951, 13.04573],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_7145106c12674ce57302de9038405f8b.bindTooltip(
+                `&lt;div&gt;
+                     Aeaea : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_4eef58e1f1e9a586653c3cdddb272ef7 = L.circleMarker(
+                [39.236111, 20.476111],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_4eef58e1f1e9a586653c3cdddb272ef7.bindTooltip(
+                `&lt;div&gt;
+                     The Underworld : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_fc668fbafd781fb5f6bcca2336d221eb = L.circleMarker(
+                [40.58, 14.43],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_fc668fbafd781fb5f6bcca2336d221eb.bindTooltip(
+                `&lt;div&gt;
+                     Sirens Water : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_72e7da8c22804e88fd072337879e629f = L.circleMarker(
+                [38.2458, 15.6325],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_72e7da8c22804e88fd072337879e629f.bindTooltip(
+                `&lt;div&gt;
+                     Scylla &amp; Charybdis : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_a6db684bc3227f69859d18195d22f23e = L.circleMarker(
+                [37.5, 14.0],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_a6db684bc3227f69859d18195d22f23e.bindTooltip(
+                `&lt;div&gt;
+                     Helios Island : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_41528f9a8feb7005a3886d3ed111a981 = L.circleMarker(
+                [36.0443, 14.2512],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_41528f9a8feb7005a3886d3ed111a981.bindTooltip(
+                `&lt;div&gt;
+                     Ogygia : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_b73c75d13650d9230952ec0415fda9f9 = L.circleMarker(
+                [39.625, 19.9223],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_b73c75d13650d9230952ec0415fda9f9.bindTooltip(
+                `&lt;div&gt;
+                     Scheria : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_c4772225ebdbb827e1f553706e945398 = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_c4772225ebdbb827e1f553706e945398.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_9216e9e3784fefd585950fa59358a7e1 = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_9216e9e3784fefd585950fa59358a7e1.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_b2008099d8aedb2a592c22a1fc3778e5 = L.circleMarker(
+                [40.0834, 22.3499],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_b2008099d8aedb2a592c22a1fc3778e5.bindTooltip(
+                `&lt;div&gt;
+                     Olympus : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_8d3edfab04f77ac2ccb201d0fa5b675e = L.circleMarker(
+                [39.625, 19.9223],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_8d3edfab04f77ac2ccb201d0fa5b675e.bindTooltip(
+                `&lt;div&gt;
+                     Scheria : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_43f361f8d4ced4384477f5dd6a67cdce = L.circleMarker(
+                [40.085556, 22.358611],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_43f361f8d4ced4384477f5dd6a67cdce.bindTooltip(
+                `&lt;div&gt;
+                     Olympus : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_72a08d5acca4468eac6545cc9a53e06b = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_72a08d5acca4468eac6545cc9a53e06b.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_f69e29c8b667396e614f587553e19fc5 = L.circleMarker(
+                [36.9131, 21.6963],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_f69e29c8b667396e614f587553e19fc5.bindTooltip(
+                `&lt;div&gt;
+                     Pylos : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_a09cc6a51009d2e25bee034ba05c6e0e = L.circleMarker(
+                [37.04, 22.43],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_a09cc6a51009d2e25bee034ba05c6e0e.bindTooltip(
+                `&lt;div&gt;
+                     Sparta : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_6b3327055d5cbc919339e441d18ce6b1 = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_6b3327055d5cbc919339e441d18ce6b1.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_32cfbb704d36ecae26a8e3e8fc640c36 = L.circleMarker(
+                [39.625, 19.9223],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_32cfbb704d36ecae26a8e3e8fc640c36.bindTooltip(
+                `&lt;div&gt;
+                     Scheria : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_e120f2ab86ab805b204c84da2523f4d9 = L.circleMarker(
+                [9.145, 40.4897],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_e120f2ab86ab805b204c84da2523f4d9.bindTooltip(
+                `&lt;div&gt;
+                     Ethiopia : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_a777bc529fe6a55a78dcc054bf58e2e4 = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_a777bc529fe6a55a78dcc054bf58e2e4.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_bf5a2814965f15d702aeafd0809c0b56 = L.circleMarker(
+                [37.04, 22.43],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_bf5a2814965f15d702aeafd0809c0b56.bindTooltip(
+                `&lt;div&gt;
+                     Sparta : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_91a7ca02d8440d9cd1d0b95ee4d07908 = L.circleMarker(
+                [36.0443, 14.2512],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_91a7ca02d8440d9cd1d0b95ee4d07908.bindTooltip(
+                `&lt;div&gt;
+                     Ogygia : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_5fe172c54bb793db7d8048958e18d94c = L.circleMarker(
+                [41.237951, 13.04573],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_5fe172c54bb793db7d8048958e18d94c.bindTooltip(
+                `&lt;div&gt;
+                     Aeaea : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_d9fdf6a78858edc60cd18040ac89a862 = L.circleMarker(
+                [39.625, 19.9223],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_d9fdf6a78858edc60cd18040ac89a862.bindTooltip(
+                `&lt;div&gt;
+                     Scheria : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_2aa33fac5db6eed73826d0b88b1b8322 = L.circleMarker(
+                [37.7518, 14.9947],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_2aa33fac5db6eed73826d0b88b1b8322.bindTooltip(
+                `&lt;div&gt;
+                     The Cyclopes : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_6d273f9e5c845de9a2c51c8df707abc6 = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_6d273f9e5c845de9a2c51c8df707abc6.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_82abcf6c9835004fde3669fdef197641 = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_82abcf6c9835004fde3669fdef197641.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_d9d464926f7e9f682266653c35843ecc = L.circleMarker(
+                [37.04, 22.43],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+    
+            circle_marker_d9d464926f7e9f682266653c35843ecc.bindTooltip(
+                `&lt;div&gt;
+                     Sparta : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            tile_layer_6658b099e3e5293c722000f49c88e495.addTo(map_9b96f3ee0e254e5c091e96f93b7c5aea);
+        
+&lt;/script&gt;
+&lt;/html&gt;" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div>
+            </div>
+        </div>
+
+        <div class="card full-width">
+            <h2>Locations With Most Figures</h2>
+            <p>Sorted by locations that have the most associated figures.</p>
+            <div class="plotly-graph">
+                <div>                            <div id="7369da63-8698-4184-83f1-6f3562b6c49b" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("7369da63-8698-4184-83f1-6f3562b6c49b")) {                    Plotly.newPlot(                        "7369da63-8698-4184-83f1-6f3562b6c49b",                        [{"alignmentgroup":"True","hovertemplate":"fig_count=%{text}\u003cbr\u003eLocation=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","marker":{"color":"#2288b3","pattern":{"shape":""}},"name":"","offsetgroup":"","orientation":"h","showlegend":false,"text":[6.0,4.0,3.0,2.0,2.0,2.0,2.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],"textposition":"auto","x":[6,4,3,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1],"xaxis":"x","y":["Ithaca","Scheria","Sparta","Aeaea","Ogygia","Olympus","The Cyclopes","Aeolia","Ismarus","Ethiopia","Laestrygonians","Land of the Lotus-Eaters","Helios Island","Pylos","Sirens Water","Scylla & Charybdis","The Underworld","Troy"],"yaxis":"y","type":"bar"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"rgb(17,17,17)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#f2f5fa"},"error_y":{"color":"#f2f5fa"},"marker":{"line":{"color":"rgb(17,17,17)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#A2B1C6","gridcolor":"#506784","linecolor":"#506784","minorgridcolor":"#506784","startlinecolor":"#A2B1C6"},"baxis":{"endlinecolor":"#A2B1C6","gridcolor":"#506784","linecolor":"#506784","minorgridcolor":"#506784","startlinecolor":"#A2B1C6"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmapgl":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmapgl"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"line":{"color":"#283442"}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"marker":{"line":{"color":"#283442"}},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#506784"},"line":{"color":"rgb(17,17,17)"}},"header":{"fill":{"color":"#2a3f5f"},"line":{"color":"rgb(17,17,17)"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#f2f5fa","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#f2f5fa"},"geo":{"bgcolor":"rgb(17,17,17)","lakecolor":"rgb(17,17,17)","landcolor":"rgb(17,17,17)","showlakes":true,"showland":true,"subunitcolor":"#506784"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"dark"},"paper_bgcolor":"rgb(17,17,17)","plot_bgcolor":"rgb(17,17,17)","polar":{"angularaxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""},"bgcolor":"rgb(17,17,17)","radialaxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"rgb(17,17,17)","gridcolor":"#506784","gridwidth":2,"linecolor":"#506784","showbackground":true,"ticks":"","zerolinecolor":"#C8D4E3"},"yaxis":{"backgroundcolor":"rgb(17,17,17)","gridcolor":"#506784","gridwidth":2,"linecolor":"#506784","showbackground":true,"ticks":"","zerolinecolor":"#C8D4E3"},"zaxis":{"backgroundcolor":"rgb(17,17,17)","gridcolor":"#506784","gridwidth":2,"linecolor":"#506784","showbackground":true,"ticks":"","zerolinecolor":"#C8D4E3"}},"shapedefaults":{"line":{"color":"#f2f5fa"}},"sliderdefaults":{"bgcolor":"#C8D4E3","bordercolor":"rgb(17,17,17)","borderwidth":1,"tickwidth":0},"ternary":{"aaxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""},"baxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""},"bgcolor":"rgb(17,17,17)","caxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""}},"title":{"x":0.05},"updatemenudefaults":{"bgcolor":"#506784","borderwidth":0},"xaxis":{"automargin":true,"gridcolor":"#283442","linecolor":"#506784","ticks":"","title":{"standoff":15},"zerolinecolor":"#283442","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"#283442","linecolor":"#506784","ticks":"","title":{"standoff":15},"zerolinecolor":"#283442","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Amount of Figures"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Location"},"autorange":"reversed"},"legend":{"tracegroupgap":0},"title":{"text":"Locations with Most Figures","x":0.5},"barmode":"relative"},                        {"responsive": true}                    )                };                            </script>        </div>
+            </div>
+        </div>
+
+        <div class="card full-width">
+            <h2>Connecting Figures to Locations</h2>
+            <p>Node graph of all figures and locations connected to them. Larger nodes have more connections. Click and drag to interact.</p>
+            <iframe src="network_graph.html" class="graph-container"></iframe>
+        </div>
+
+        <div class="card full-width">
+            <h2>Odysseus' Journey</h2>
+            <p>Path in the order that Odysseus traveled. Hover points for more information, including descriptions. Path starts at Troy (top right).</p>
+            <div class="plotly-map">
+                <div>                            <div id="8c48e7e7-08e7-4951-9930-0dd25f963646" class="plotly-graph-div" style="height:650px; width:100%;"></div>            <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("8c48e7e7-08e7-4951-9930-0dd25f963646")) {                    Plotly.newPlot(                        "8c48e7e7-08e7-4951-9930-0dd25f963646",                        [{"customdata":[["Odysseus","Odysseus start of his journey"],["Odysseus","Odysseus goes to the Cicones in Ismarus."],["Odysseus","Odysseys goes to the island where the Lotus-Eaters are"],["Odysseus","Odysseus visits the Cyclops"],["Odysseus","Aeolus gives Odysseus a bag of winds"],["Odysseus","Odysseus visits Laestrygonia"],["Odysseus","Odysseus visits Circe at Aeaea"],["Odysseus","Odysseus is told to go to Hades\u002fThe Underworld"],["Odysseus","Odysseus travels by the Sirens and hears their singing"],["Odysseus","Odysseus and his men pass by Scylla & Charybdis"],["Odysseus","Odysseus and his men reach Helios' Island"],["Odysseus","Odysseus drifts to Ogygia"],["Odysseus","Odysseus is brought to Scheria by Nausithous"],["Odysseus","Odysseus finally gets back home"]],"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eLocation=%{text}\u003cbr\u003eLat=%{lat}\u003cbr\u003eLon=%{lon}\u003cbr\u003eFigure=%{customdata[0]}\u003cbr\u003eDescription=%{customdata[1]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Troy","Ismarus","Land of the Lotus-Eaters","The Cyclopes","Aeolia","Laestrygonians","Aeaea","The Underworld","Sirens Water","Scylla & Charybdis","Helios Island","Ogygia","Scheria","Ithaca"],"lat":[39.9575,40.96,33.783333,37.7518,38.7917,37.5,41.237951,39.236111,40.58,38.2458,37.5,36.0443,39.625,38.42854],"legendgroup":"","line":{"color":"#2288b3"},"lon":[26.2389,25.37,10.883333,14.9947,15.2139,14.0,13.04573,20.476111,14.43,15.6325,14.0,14.2512,19.9223,20.6765],"mode":"lines+markers+text","name":"","showlegend":false,"subplot":"mapbox","text":["Troy","Ismarus","Land of the Lotus-Eaters","The Cyclopes","Aeolia","Laestrygonians","Aeaea","The Underworld","Sirens Water","Scylla & Charybdis","Helios Island","Ogygia","Scheria","Ithaca"],"type":"scattermapbox"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"mapbox":{"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"center":{"lat":38.54585964285714,"lon":17.08108385714286},"zoom":4.5,"style":{"version":8,"sources":{"carto":{"type":"raster","tiles":["https:\u002f\u002fbasemaps.cartocdn.com\u002frastertiles\u002fdark_all\u002f{z}\u002f{x}\u002f{y}.png?key=cb1_4fn5_1_b37d4d754a04f6628474849f"],"tileSize":256,"attribution":"© OpenStreetMap contributors © CARTO"}},"layers":[{"id":"carto","type":"raster","source":"carto"}]}},"legend":{"tracegroupgap":0},"margin":{"t":60},"height":650},                        {"responsive": true}                    )                };                            </script>        </div>
+            </div>
+        </div>
+
+        <div class="card full-width">
+            <h2>Animation of Odysseus' Journey</h2>
+            <p>Odysseus' stops individually mapped in order. Press play to view animation.</p>
+            <iframe src="odysseus_trav_animation.html" class="graph-container"></iframe>
+        </div>
+
+        <div class="card full-width">
+             <h2>Conclusion</h2>
+             <p>The results of these visuals conclude that Odysseus, expectedly, had the most connections with each location and character.
+             It is clear with the travel maps that he went back and forth many times across the area, given that the mythological locations are similar to where they would actually be.
+             This aligns with how his journey was exhaustive, and on top of what he went through at every location, moving around that much is a difficult task itself.
+             The location chart distinguishes three of the most connected locations: Ithaca, Scheria, and Sparta. Then it disbands into 2 groups of one and two figures per location.
+             Associating that with the node graph, you can make out that Odysseus, Ithaca, Scheria, Athena, Sparta, and Telemachus were some of the more prominent characters and locations.
+             You can recognize how each of those characters/locations had their own relationships with other characters/locations. The whole node graph exhibits how some characters/locations are closely tied together, while some are more distant.
+             However, with context we know that even the most distant characters can have strong impacts, such as Zeus, who was a problem in Odysseus' return home. We can notice that Ethiopia is an outlier, but connects to Poseidon who was also a major issue for Odysseus.
+             You can also note that Athena is one of the largest nodes, aligning with her significance in helping Odysseus.
+             These visualizations do not display a complete representation however, as there are more characters and locations in the Odyssey. With more data, each node could have more connections, but with this dataset we still get a good depiction of the overarching story.</p>
+        </div>
+    </div>
+</body>
+</html>

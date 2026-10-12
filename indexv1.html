@@ -1,0 +1,2486 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mythical Landmarks</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" crossorigin=""/>
+    <link href="https://fonts.googleapis.com/css2?family=Sansita:wght@400;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" crossorigin=""></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body { font-family: Sansita, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; color: #333; }
+        h1 { text-align: center; color: #2288b3; margin-bottom: 30px; }
+        .dashboard-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 20px; max-width: 1400px; margin: 20px auto; }
+        .card { background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 20px; overflow: hidden; }
+        .card h2 { margin-top: 0; color: #2288b3; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
+        .card p {margin-bottom: 12px; color: #666; font-size: 14px;}
+        .map-container { height: 400px; width: 100%; }
+        .plotly-graph { width: 100%; min-height: 520px; }
+        .plotly-map { width: 100%; min-height: 650px; }
+        .graph-container { width: 100%; height: 700px; border: none; }
+        .full-width { grid-column: 1 / -1; }
+    </style>
+</head>
+<body>
+    <h1>Mythical Landmarks</h1>
+    <div class="dashboard-container">
+
+      <div class="card full-width">
+            <h2>Dashboard Goal:</h2>
+            <p>This dashboard uses a dataset containing information about prominent characters from the Odyssey.
+            The goal is to display connections between mythological characters and locations they have visited in a fun, interactive, and informative way. </p>
+        </div>
+
+
+        <div class="card">
+            <h2>All Landmarks</h2>
+            <p>Map of all landmarks. Hover over points for more information.</p>
+            <div class="map-container">
+                <div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><span style="color:#565656">Make this Notebook Trusted to load map: File -> Trust Notebook</span><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    
+    &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://code.jquery.com/jquery-3.7.1.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js&quot;&gt;&lt;/script&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css&quot;/&gt;
+    
+            &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
+            &lt;style&gt;
+                #map_692eef91c83bf488be351c73819e8478 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            &lt;/style&gt;
+
+            &lt;style&gt;html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            &lt;/style&gt;
+
+            &lt;style&gt;#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            &lt;/style&gt;
+
+            &lt;script&gt;
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            &lt;/script&gt;
+
+        
+&lt;/head&gt;
+&lt;body&gt;
+    
+    
+            &lt;div class=&quot;folium-map&quot; id=&quot;map_692eef91c83bf488be351c73819e8478&quot; &gt;&lt;/div&gt;
+        
+&lt;/body&gt;
+&lt;script&gt;
+    
+    
+            var map_692eef91c83bf488be351c73819e8478 = L.map(
+                &quot;map_692eef91c83bf488be351c73819e8478&quot;,
+                {
+                    center: [37.61279896969697, 19.857923666666665],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  &quot;zoom&quot;: 5,
+  &quot;zoomControl&quot;: true,
+  &quot;preferCanvas&quot;: false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_f49286ca44f7a17a4903382e767caaab = L.tileLayer(
+                &quot;https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png&quot;,
+                {
+  &quot;minZoom&quot;: 0,
+  &quot;maxZoom&quot;: 20,
+  &quot;maxNativeZoom&quot;: 20,
+  &quot;noWrap&quot;: false,
+  &quot;attribution&quot;: &quot;\u0026copy; \u003ca href=\&quot;https://www.openstreetmap.org/copyright\&quot;\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\&quot;https://carto.com/attributions\&quot;\u003eCARTO\u003c/a\u003e&quot;,
+  &quot;subdomains&quot;: &quot;abcd&quot;,
+  &quot;detectRetina&quot;: false,
+  &quot;tms&quot;: false,
+  &quot;opacity&quot;: 1,
+}
+
+            );
+        
+    
+            tile_layer_f49286ca44f7a17a4903382e767caaab.addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+            var circle_marker_5b8ddda3efd3e74a71ee5fd9ff48fafe = L.circleMarker(
+                [39.9575, 26.2389],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_8e5d19ba25b2fc8748222aefa45b9042 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_3606b389314ea993d581d24026de63fc = $(`&lt;div id=&quot;html_3606b389314ea993d581d24026de63fc&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_8e5d19ba25b2fc8748222aefa45b9042.setContent(html_3606b389314ea993d581d24026de63fc);
+            
+        
+
+        circle_marker_5b8ddda3efd3e74a71ee5fd9ff48fafe.bindPopup(popup_8e5d19ba25b2fc8748222aefa45b9042)
+        ;
+
+        
+    
+    
+            circle_marker_5b8ddda3efd3e74a71ee5fd9ff48fafe.bindTooltip(
+                `&lt;div&gt;
+                     Troy
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_384b2383793a3e9d4e6d6addfb8f9cda = L.circleMarker(
+                [40.96, 25.37],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_19378d3a270a6df7ed3c5f2fb02e5d53 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_60b5aa8f0e7ac80439613e23e23276d7 = $(`&lt;div id=&quot;html_60b5aa8f0e7ac80439613e23e23276d7&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_19378d3a270a6df7ed3c5f2fb02e5d53.setContent(html_60b5aa8f0e7ac80439613e23e23276d7);
+            
+        
+
+        circle_marker_384b2383793a3e9d4e6d6addfb8f9cda.bindPopup(popup_19378d3a270a6df7ed3c5f2fb02e5d53)
+        ;
+
+        
+    
+    
+            circle_marker_384b2383793a3e9d4e6d6addfb8f9cda.bindTooltip(
+                `&lt;div&gt;
+                     Ismarus
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_48ed0fdc2ffe9b07b0cb1adbab42f526 = L.circleMarker(
+                [33.685817, 10.922214],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_50063f972ce4c626fbd64d90429de312 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_9a75edab008e7fd44af4aa16245798b1 = $(`&lt;div id=&quot;html_9a75edab008e7fd44af4aa16245798b1&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_50063f972ce4c626fbd64d90429de312.setContent(html_9a75edab008e7fd44af4aa16245798b1);
+            
+        
+
+        circle_marker_48ed0fdc2ffe9b07b0cb1adbab42f526.bindPopup(popup_50063f972ce4c626fbd64d90429de312)
+        ;
+
+        
+    
+    
+            circle_marker_48ed0fdc2ffe9b07b0cb1adbab42f526.bindTooltip(
+                `&lt;div&gt;
+                     Land of the Lotus-Eaters
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_860b2642915e471156d6788db384f27a = L.circleMarker(
+                [37.7518, 14.9947],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_f61863e5013d027665f05a3571c22290 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_5c78682f469529bd42a10687dd605233 = $(`&lt;div id=&quot;html_5c78682f469529bd42a10687dd605233&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_f61863e5013d027665f05a3571c22290.setContent(html_5c78682f469529bd42a10687dd605233);
+            
+        
+
+        circle_marker_860b2642915e471156d6788db384f27a.bindPopup(popup_f61863e5013d027665f05a3571c22290)
+        ;
+
+        
+    
+    
+            circle_marker_860b2642915e471156d6788db384f27a.bindTooltip(
+                `&lt;div&gt;
+                     The Cyclopes
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_dc93278d1b64aaf56f435319473371b8 = L.circleMarker(
+                [38.7917, 15.2139],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_260c00cc599ae69fa10f31dcbaddc051 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_a82074a59ebf488922b3332be9c6789b = $(`&lt;div id=&quot;html_a82074a59ebf488922b3332be9c6789b&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_260c00cc599ae69fa10f31dcbaddc051.setContent(html_a82074a59ebf488922b3332be9c6789b);
+            
+        
+
+        circle_marker_dc93278d1b64aaf56f435319473371b8.bindPopup(popup_260c00cc599ae69fa10f31dcbaddc051)
+        ;
+
+        
+    
+    
+            circle_marker_dc93278d1b64aaf56f435319473371b8.bindTooltip(
+                `&lt;div&gt;
+                     Aeolia
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_c6bb67141c96556afea3995875c9dad8 = L.circleMarker(
+                [41.266667, 13.616667],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_8060ab1704e5f59d78ed477df657f313 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_086d6022b3c79bc788ddb745b66df016 = $(`&lt;div id=&quot;html_086d6022b3c79bc788ddb745b66df016&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_8060ab1704e5f59d78ed477df657f313.setContent(html_086d6022b3c79bc788ddb745b66df016);
+            
+        
+
+        circle_marker_c6bb67141c96556afea3995875c9dad8.bindPopup(popup_8060ab1704e5f59d78ed477df657f313)
+        ;
+
+        
+    
+    
+            circle_marker_c6bb67141c96556afea3995875c9dad8.bindTooltip(
+                `&lt;div&gt;
+                     Laestrygonians
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_0f2a4acb8a71885cd19f20be8c3c7296 = L.circleMarker(
+                [41.237951, 13.04573],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_9c4947156387627a46bbf51fb9896149 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_860e84202609bbbd6c6a33cf0959ea34 = $(`&lt;div id=&quot;html_860e84202609bbbd6c6a33cf0959ea34&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_9c4947156387627a46bbf51fb9896149.setContent(html_860e84202609bbbd6c6a33cf0959ea34);
+            
+        
+
+        circle_marker_0f2a4acb8a71885cd19f20be8c3c7296.bindPopup(popup_9c4947156387627a46bbf51fb9896149)
+        ;
+
+        
+    
+    
+            circle_marker_0f2a4acb8a71885cd19f20be8c3c7296.bindTooltip(
+                `&lt;div&gt;
+                     Aeaea
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_a3d1fe1e0d884c1bdded744e0462a953 = L.circleMarker(
+                [36.385, 22.48294],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_ffc462cd0b618bcac29099d5efb1cf9b = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_9d3500065d0acb920bdf0dbc80b659dd = $(`&lt;div id=&quot;html_9d3500065d0acb920bdf0dbc80b659dd&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_ffc462cd0b618bcac29099d5efb1cf9b.setContent(html_9d3500065d0acb920bdf0dbc80b659dd);
+            
+        
+
+        circle_marker_a3d1fe1e0d884c1bdded744e0462a953.bindPopup(popup_ffc462cd0b618bcac29099d5efb1cf9b)
+        ;
+
+        
+    
+    
+            circle_marker_a3d1fe1e0d884c1bdded744e0462a953.bindTooltip(
+                `&lt;div&gt;
+                     The Underworld
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_68e512476985b5edeb5d6f28b07bc026 = L.circleMarker(
+                [40.583, 14.433],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_31cb8d0431168e5d3579618f88748351 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_c42a3abd9cbf10ee1e2b20e5e8d268e8 = $(`&lt;div id=&quot;html_c42a3abd9cbf10ee1e2b20e5e8d268e8&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_31cb8d0431168e5d3579618f88748351.setContent(html_c42a3abd9cbf10ee1e2b20e5e8d268e8);
+            
+        
+
+        circle_marker_68e512476985b5edeb5d6f28b07bc026.bindPopup(popup_31cb8d0431168e5d3579618f88748351)
+        ;
+
+        
+    
+    
+            circle_marker_68e512476985b5edeb5d6f28b07bc026.bindTooltip(
+                `&lt;div&gt;
+                     Sirens Water
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_a589fd2278f246a510f9311e8509da02 = L.circleMarker(
+                [38.2458, 15.6325],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_a1825eca0c53fc3eec4374c8b8808b89 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_572aade0a5555d85ff6fc4bdeaaef788 = $(`&lt;div id=&quot;html_572aade0a5555d85ff6fc4bdeaaef788&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_a1825eca0c53fc3eec4374c8b8808b89.setContent(html_572aade0a5555d85ff6fc4bdeaaef788);
+            
+        
+
+        circle_marker_a589fd2278f246a510f9311e8509da02.bindPopup(popup_a1825eca0c53fc3eec4374c8b8808b89)
+        ;
+
+        
+    
+    
+            circle_marker_a589fd2278f246a510f9311e8509da02.bindTooltip(
+                `&lt;div&gt;
+                     Scylla &amp; Charybdis
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_f16bc1216f126f8db8005aa253f12797 = L.circleMarker(
+                [36.4341, 28.2176],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_4888b07168c9ab0e173fd41be2e7f145 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_1e339cf7b259dd26560d847d826fab8b = $(`&lt;div id=&quot;html_1e339cf7b259dd26560d847d826fab8b&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_4888b07168c9ab0e173fd41be2e7f145.setContent(html_1e339cf7b259dd26560d847d826fab8b);
+            
+        
+
+        circle_marker_f16bc1216f126f8db8005aa253f12797.bindPopup(popup_4888b07168c9ab0e173fd41be2e7f145)
+        ;
+
+        
+    
+    
+            circle_marker_f16bc1216f126f8db8005aa253f12797.bindTooltip(
+                `&lt;div&gt;
+                     Helios Island
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_fe510042bec6d9610eab79b99593ccce = L.circleMarker(
+                [36.0443, 14.2512],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_8f741496bb7d26e50ca7e641965e4cb3 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_5de259559850cef492cc7ab88999a0b4 = $(`&lt;div id=&quot;html_5de259559850cef492cc7ab88999a0b4&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_8f741496bb7d26e50ca7e641965e4cb3.setContent(html_5de259559850cef492cc7ab88999a0b4);
+            
+        
+
+        circle_marker_fe510042bec6d9610eab79b99593ccce.bindPopup(popup_8f741496bb7d26e50ca7e641965e4cb3)
+        ;
+
+        
+    
+    
+            circle_marker_fe510042bec6d9610eab79b99593ccce.bindTooltip(
+                `&lt;div&gt;
+                     Ogygia
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_884ed73d4c11bd5631d00188d751362b = L.circleMarker(
+                [39.625, 19.9223],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_b3e54bd523afdfcbc200b58c1b387cd2 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_e6319e8d31bb96699b2010ce27028f97 = $(`&lt;div id=&quot;html_e6319e8d31bb96699b2010ce27028f97&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_b3e54bd523afdfcbc200b58c1b387cd2.setContent(html_e6319e8d31bb96699b2010ce27028f97);
+            
+        
+
+        circle_marker_884ed73d4c11bd5631d00188d751362b.bindPopup(popup_b3e54bd523afdfcbc200b58c1b387cd2)
+        ;
+
+        
+    
+    
+            circle_marker_884ed73d4c11bd5631d00188d751362b.bindTooltip(
+                `&lt;div&gt;
+                     Scheria
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_401e096393a036cd02a688e9f32a68f2 = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_fa594b42d54d9c4fdc7a6b78c11d8d08 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_b8c0a6e3a0d28b8184e9488537c61c5a = $(`&lt;div id=&quot;html_b8c0a6e3a0d28b8184e9488537c61c5a&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_fa594b42d54d9c4fdc7a6b78c11d8d08.setContent(html_b8c0a6e3a0d28b8184e9488537c61c5a);
+            
+        
+
+        circle_marker_401e096393a036cd02a688e9f32a68f2.bindPopup(popup_fa594b42d54d9c4fdc7a6b78c11d8d08)
+        ;
+
+        
+    
+    
+            circle_marker_401e096393a036cd02a688e9f32a68f2.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_82207f9e57f1067e902f9918228943f4 = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_3d700526828944f480eaa210b86a41fa = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_ef4037a4a2eec1e8a1cd50248048272c = $(`&lt;div id=&quot;html_ef4037a4a2eec1e8a1cd50248048272c&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Athena&lt;/div&gt;`)[0];
+                popup_3d700526828944f480eaa210b86a41fa.setContent(html_ef4037a4a2eec1e8a1cd50248048272c);
+            
+        
+
+        circle_marker_82207f9e57f1067e902f9918228943f4.bindPopup(popup_3d700526828944f480eaa210b86a41fa)
+        ;
+
+        
+    
+    
+            circle_marker_82207f9e57f1067e902f9918228943f4.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_556b08d63e1ce371f52bb4c8038cbbbf = L.circleMarker(
+                [40.0834, 22.3499],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_dab726250bb6385f670b4dc962889ef8 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_c4b7125e344dd6659803fe97bb182c88 = $(`&lt;div id=&quot;html_c4b7125e344dd6659803fe97bb182c88&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Athena&lt;/div&gt;`)[0];
+                popup_dab726250bb6385f670b4dc962889ef8.setContent(html_c4b7125e344dd6659803fe97bb182c88);
+            
+        
+
+        circle_marker_556b08d63e1ce371f52bb4c8038cbbbf.bindPopup(popup_dab726250bb6385f670b4dc962889ef8)
+        ;
+
+        
+    
+    
+            circle_marker_556b08d63e1ce371f52bb4c8038cbbbf.bindTooltip(
+                `&lt;div&gt;
+                     Olympus
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_d8d5e29a5782650592e32e9d1015b402 = L.circleMarker(
+                [39.625, 19.9223],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_0fe1692c483c7c4d1c7f26b948c6d4c9 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_3073b941a02a23b528691256336e08a8 = $(`&lt;div id=&quot;html_3073b941a02a23b528691256336e08a8&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Athena&lt;/div&gt;`)[0];
+                popup_0fe1692c483c7c4d1c7f26b948c6d4c9.setContent(html_3073b941a02a23b528691256336e08a8);
+            
+        
+
+        circle_marker_d8d5e29a5782650592e32e9d1015b402.bindPopup(popup_0fe1692c483c7c4d1c7f26b948c6d4c9)
+        ;
+
+        
+    
+    
+            circle_marker_d8d5e29a5782650592e32e9d1015b402.bindTooltip(
+                `&lt;div&gt;
+                     Scheria
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_3db1cb0896bf98084621ab1ba8b5cd8d = L.circleMarker(
+                [40.0834, 22.3499],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_dc1ef6fc6a8cabc329c58370620910fe = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_b9683a3ef004256e892ae70266f5c224 = $(`&lt;div id=&quot;html_b9683a3ef004256e892ae70266f5c224&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Zeus&lt;/div&gt;`)[0];
+                popup_dc1ef6fc6a8cabc329c58370620910fe.setContent(html_b9683a3ef004256e892ae70266f5c224);
+            
+        
+
+        circle_marker_3db1cb0896bf98084621ab1ba8b5cd8d.bindPopup(popup_dc1ef6fc6a8cabc329c58370620910fe)
+        ;
+
+        
+    
+    
+            circle_marker_3db1cb0896bf98084621ab1ba8b5cd8d.bindTooltip(
+                `&lt;div&gt;
+                     Olympus
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_71b7af1bc658a233094f5174e74732ca = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_3c67f62e7d49cced076831bff6d2f718 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_122dfdbea4e48f4bf542b41aeb72d0bc = $(`&lt;div id=&quot;html_122dfdbea4e48f4bf542b41aeb72d0bc&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Telemachus&lt;/div&gt;`)[0];
+                popup_3c67f62e7d49cced076831bff6d2f718.setContent(html_122dfdbea4e48f4bf542b41aeb72d0bc);
+            
+        
+
+        circle_marker_71b7af1bc658a233094f5174e74732ca.bindPopup(popup_3c67f62e7d49cced076831bff6d2f718)
+        ;
+
+        
+    
+    
+            circle_marker_71b7af1bc658a233094f5174e74732ca.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_8bdfdea273483530eb9e1b9a355abc74 = L.circleMarker(
+                [36.9131, 21.6963],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_97c6cfbf8ef7e727de5c7924c8017363 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_c37d4e686916456596976902b9a697a2 = $(`&lt;div id=&quot;html_c37d4e686916456596976902b9a697a2&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Telemachus&lt;/div&gt;`)[0];
+                popup_97c6cfbf8ef7e727de5c7924c8017363.setContent(html_c37d4e686916456596976902b9a697a2);
+            
+        
+
+        circle_marker_8bdfdea273483530eb9e1b9a355abc74.bindPopup(popup_97c6cfbf8ef7e727de5c7924c8017363)
+        ;
+
+        
+    
+    
+            circle_marker_8bdfdea273483530eb9e1b9a355abc74.bindTooltip(
+                `&lt;div&gt;
+                     Pylos
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_3a406c2789bcf1d55aa87a81d4907b26 = L.circleMarker(
+                [37.04, 22.43],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_67fb867cfa8f3dccb8da8d0326857a82 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_00c7257fd630d95bd3535d91326a6432 = $(`&lt;div id=&quot;html_00c7257fd630d95bd3535d91326a6432&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Telemachus&lt;/div&gt;`)[0];
+                popup_67fb867cfa8f3dccb8da8d0326857a82.setContent(html_00c7257fd630d95bd3535d91326a6432);
+            
+        
+
+        circle_marker_3a406c2789bcf1d55aa87a81d4907b26.bindPopup(popup_67fb867cfa8f3dccb8da8d0326857a82)
+        ;
+
+        
+    
+    
+            circle_marker_3a406c2789bcf1d55aa87a81d4907b26.bindTooltip(
+                `&lt;div&gt;
+                     Sparta
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_2b13da0919a9a6b1c23eb90c4042eb16 = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_90732e312969e18cd01eb44b63246e24 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_e588b2acf0e6c3751785b10d89bca54d = $(`&lt;div id=&quot;html_e588b2acf0e6c3751785b10d89bca54d&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Telemachus&lt;/div&gt;`)[0];
+                popup_90732e312969e18cd01eb44b63246e24.setContent(html_e588b2acf0e6c3751785b10d89bca54d);
+            
+        
+
+        circle_marker_2b13da0919a9a6b1c23eb90c4042eb16.bindPopup(popup_90732e312969e18cd01eb44b63246e24)
+        ;
+
+        
+    
+    
+            circle_marker_2b13da0919a9a6b1c23eb90c4042eb16.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_19b760591074063e685130763abeb26c = L.circleMarker(
+                [39.625, 19.9223],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_0309ecada12d8981cef99e47ca6c176c = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_f8fd90dae22f5b6c4e3429ec51480702 = $(`&lt;div id=&quot;html_f8fd90dae22f5b6c4e3429ec51480702&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Poseidon&lt;/div&gt;`)[0];
+                popup_0309ecada12d8981cef99e47ca6c176c.setContent(html_f8fd90dae22f5b6c4e3429ec51480702);
+            
+        
+
+        circle_marker_19b760591074063e685130763abeb26c.bindPopup(popup_0309ecada12d8981cef99e47ca6c176c)
+        ;
+
+        
+    
+    
+            circle_marker_19b760591074063e685130763abeb26c.bindTooltip(
+                `&lt;div&gt;
+                     Scheria
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_5024427a5dcd1d199ed9b846870f683b = L.circleMarker(
+                [9.145, 40.4897],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_51536b47517625dedd48ff676b1e0ec5 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_f127078961659fbf2268970eb726ab36 = $(`&lt;div id=&quot;html_f127078961659fbf2268970eb726ab36&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Poseidon&lt;/div&gt;`)[0];
+                popup_51536b47517625dedd48ff676b1e0ec5.setContent(html_f127078961659fbf2268970eb726ab36);
+            
+        
+
+        circle_marker_5024427a5dcd1d199ed9b846870f683b.bindPopup(popup_51536b47517625dedd48ff676b1e0ec5)
+        ;
+
+        
+    
+    
+            circle_marker_5024427a5dcd1d199ed9b846870f683b.bindTooltip(
+                `&lt;div&gt;
+                     Ethiopia
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_d18743157f09a737b7d4c4cc5305ba5c = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_d94f8397446f3e34565c7badeb624425 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_6d7229b95e2ac8fe8d484abc4639c954 = $(`&lt;div id=&quot;html_6d7229b95e2ac8fe8d484abc4639c954&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Penelope&lt;/div&gt;`)[0];
+                popup_d94f8397446f3e34565c7badeb624425.setContent(html_6d7229b95e2ac8fe8d484abc4639c954);
+            
+        
+
+        circle_marker_d18743157f09a737b7d4c4cc5305ba5c.bindPopup(popup_d94f8397446f3e34565c7badeb624425)
+        ;
+
+        
+    
+    
+            circle_marker_d18743157f09a737b7d4c4cc5305ba5c.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_ae65418e947789f8fad9cd2b827e14cf = L.circleMarker(
+                [37.04, 22.43],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_0a9a3eada89ea505e3098e82299d691e = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_9b7bf577d8902648fc870342136c801a = $(`&lt;div id=&quot;html_9b7bf577d8902648fc870342136c801a&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Menelaus&lt;/div&gt;`)[0];
+                popup_0a9a3eada89ea505e3098e82299d691e.setContent(html_9b7bf577d8902648fc870342136c801a);
+            
+        
+
+        circle_marker_ae65418e947789f8fad9cd2b827e14cf.bindPopup(popup_0a9a3eada89ea505e3098e82299d691e)
+        ;
+
+        
+    
+    
+            circle_marker_ae65418e947789f8fad9cd2b827e14cf.bindTooltip(
+                `&lt;div&gt;
+                     Sparta
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_6aff2a79b346f5b0301a0be4dfe772a5 = L.circleMarker(
+                [36.0443, 14.2512],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_1d6c2d722dbaa4769373b07d383212e5 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_95aec34e6b8d2a5ec0350f975acafe15 = $(`&lt;div id=&quot;html_95aec34e6b8d2a5ec0350f975acafe15&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Calypso&lt;/div&gt;`)[0];
+                popup_1d6c2d722dbaa4769373b07d383212e5.setContent(html_95aec34e6b8d2a5ec0350f975acafe15);
+            
+        
+
+        circle_marker_6aff2a79b346f5b0301a0be4dfe772a5.bindPopup(popup_1d6c2d722dbaa4769373b07d383212e5)
+        ;
+
+        
+    
+    
+            circle_marker_6aff2a79b346f5b0301a0be4dfe772a5.bindTooltip(
+                `&lt;div&gt;
+                     Ogygia
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_fc068401cf366265895a0f23bb5b2752 = L.circleMarker(
+                [41.237951, 13.04573],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_471f6db878072720024aebcd77e1f5b4 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_9cae9951b5c02b450feec7dab73ec7b2 = $(`&lt;div id=&quot;html_9cae9951b5c02b450feec7dab73ec7b2&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Circe&lt;/div&gt;`)[0];
+                popup_471f6db878072720024aebcd77e1f5b4.setContent(html_9cae9951b5c02b450feec7dab73ec7b2);
+            
+        
+
+        circle_marker_fc068401cf366265895a0f23bb5b2752.bindPopup(popup_471f6db878072720024aebcd77e1f5b4)
+        ;
+
+        
+    
+    
+            circle_marker_fc068401cf366265895a0f23bb5b2752.bindTooltip(
+                `&lt;div&gt;
+                     Aeaea
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_99c24a3ae94f1b900aafc86be2f2c6e4 = L.circleMarker(
+                [39.625, 19.9223],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_b31b812dce3fb27beedf9575ed423ab8 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_4f161f5fe405d2ba74127453e3f12394 = $(`&lt;div id=&quot;html_4f161f5fe405d2ba74127453e3f12394&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Nausicaa&lt;/div&gt;`)[0];
+                popup_b31b812dce3fb27beedf9575ed423ab8.setContent(html_4f161f5fe405d2ba74127453e3f12394);
+            
+        
+
+        circle_marker_99c24a3ae94f1b900aafc86be2f2c6e4.bindPopup(popup_b31b812dce3fb27beedf9575ed423ab8)
+        ;
+
+        
+    
+    
+            circle_marker_99c24a3ae94f1b900aafc86be2f2c6e4.bindTooltip(
+                `&lt;div&gt;
+                     Scheria
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_6aa73fd22fbf9b0791caea2054fe3f9c = L.circleMarker(
+                [37.7518, 14.9947],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_1b86385816520c8bf714520cc69212e9 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_f358b1cab212e79f31c1b0b4a9606636 = $(`&lt;div id=&quot;html_f358b1cab212e79f31c1b0b4a9606636&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Polyphemus&lt;/div&gt;`)[0];
+                popup_1b86385816520c8bf714520cc69212e9.setContent(html_f358b1cab212e79f31c1b0b4a9606636);
+            
+        
+
+        circle_marker_6aa73fd22fbf9b0791caea2054fe3f9c.bindPopup(popup_1b86385816520c8bf714520cc69212e9)
+        ;
+
+        
+    
+    
+            circle_marker_6aa73fd22fbf9b0791caea2054fe3f9c.bindTooltip(
+                `&lt;div&gt;
+                     The Cyclopes
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_b0f4b610618d73d13bf8718f9c99b9ef = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_7e21483a0233107ad332bdd0602fbb3a = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_9ed99272ba72ac3231f33bceeacf03ea = $(`&lt;div id=&quot;html_9ed99272ba72ac3231f33bceeacf03ea&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Eumaeus&lt;/div&gt;`)[0];
+                popup_7e21483a0233107ad332bdd0602fbb3a.setContent(html_9ed99272ba72ac3231f33bceeacf03ea);
+            
+        
+
+        circle_marker_b0f4b610618d73d13bf8718f9c99b9ef.bindPopup(popup_7e21483a0233107ad332bdd0602fbb3a)
+        ;
+
+        
+    
+    
+            circle_marker_b0f4b610618d73d13bf8718f9c99b9ef.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_4e89245e0e5970dfbcaf81bdf707600c = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_78a0046722c5b90d39dfd50c54394654 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_1059dd95aa56dd78c5034328344f2c5d = $(`&lt;div id=&quot;html_1059dd95aa56dd78c5034328344f2c5d&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Antinous&lt;/div&gt;`)[0];
+                popup_78a0046722c5b90d39dfd50c54394654.setContent(html_1059dd95aa56dd78c5034328344f2c5d);
+            
+        
+
+        circle_marker_4e89245e0e5970dfbcaf81bdf707600c.bindPopup(popup_78a0046722c5b90d39dfd50c54394654)
+        ;
+
+        
+    
+    
+            circle_marker_4e89245e0e5970dfbcaf81bdf707600c.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_bc5d10c68bc817d542835b794711e4cd = L.circleMarker(
+                [37.04, 22.43],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#2288b3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#2288b3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+        var popup_46a24a1d3167d27fef6618bcf0421103 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_1b8491305ffc97f42a681d2ae6d1bcf0 = $(`&lt;div id=&quot;html_1b8491305ffc97f42a681d2ae6d1bcf0&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Helen&lt;/div&gt;`)[0];
+                popup_46a24a1d3167d27fef6618bcf0421103.setContent(html_1b8491305ffc97f42a681d2ae6d1bcf0);
+            
+        
+
+        circle_marker_bc5d10c68bc817d542835b794711e4cd.bindPopup(popup_46a24a1d3167d27fef6618bcf0421103)
+        ;
+
+        
+    
+    
+            circle_marker_bc5d10c68bc817d542835b794711e4cd.bindTooltip(
+                `&lt;div&gt;
+                     Sparta
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            tile_layer_f49286ca44f7a17a4903382e767caaab.addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+            tile_layer_f49286ca44f7a17a4903382e767caaab.addTo(map_692eef91c83bf488be351c73819e8478);
+        
+    
+            tile_layer_f49286ca44f7a17a4903382e767caaab.addTo(map_692eef91c83bf488be351c73819e8478);
+        
+&lt;/script&gt;
+&lt;/html&gt;" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Physical VS Mythological</h2>
+            <p>Red points mark mythical locations & purple mark physical locations. Click to see character name.</p>
+            <div class="map-container">
+                <div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><span style="color:#565656">Make this Notebook Trusted to load map: File -> Trust Notebook</span><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    
+    &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://code.jquery.com/jquery-3.7.1.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js&quot;&gt;&lt;/script&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css&quot;/&gt;
+    
+            &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
+            &lt;style&gt;
+                #map_d1552fa9d2a1aa7937ebf9798a204e65 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            &lt;/style&gt;
+
+            &lt;style&gt;html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            &lt;/style&gt;
+
+            &lt;style&gt;#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            &lt;/style&gt;
+
+            &lt;script&gt;
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            &lt;/script&gt;
+
+        
+&lt;/head&gt;
+&lt;body&gt;
+    
+    
+            &lt;div class=&quot;folium-map&quot; id=&quot;map_d1552fa9d2a1aa7937ebf9798a204e65&quot; &gt;&lt;/div&gt;
+        
+&lt;/body&gt;
+&lt;script&gt;
+    
+    
+            var map_d1552fa9d2a1aa7937ebf9798a204e65 = L.map(
+                &quot;map_d1552fa9d2a1aa7937ebf9798a204e65&quot;,
+                {
+                    center: [37.61279896969697, 19.857923666666665],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  &quot;zoom&quot;: 5,
+  &quot;zoomControl&quot;: true,
+  &quot;preferCanvas&quot;: false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_c6fb24a9d68e06226ec2651870418468 = L.tileLayer(
+                &quot;https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png&quot;,
+                {
+  &quot;minZoom&quot;: 0,
+  &quot;maxZoom&quot;: 20,
+  &quot;maxNativeZoom&quot;: 20,
+  &quot;noWrap&quot;: false,
+  &quot;attribution&quot;: &quot;\u0026copy; \u003ca href=\&quot;https://www.openstreetmap.org/copyright\&quot;\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\&quot;https://carto.com/attributions\&quot;\u003eCARTO\u003c/a\u003e&quot;,
+  &quot;subdomains&quot;: &quot;abcd&quot;,
+  &quot;detectRetina&quot;: false,
+  &quot;tms&quot;: false,
+  &quot;opacity&quot;: 1,
+}
+
+            );
+        
+    
+            tile_layer_c6fb24a9d68e06226ec2651870418468.addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+            var circle_marker_17b40a1286ec9781a5f90c2d9756c82e = L.circleMarker(
+                [39.9575, 26.2389],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_9bb33acf9a786fceb45776c2ba5fa4e6 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_12ed5d15834a8d6b7a1a231f2672693c = $(`&lt;div id=&quot;html_12ed5d15834a8d6b7a1a231f2672693c&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_9bb33acf9a786fceb45776c2ba5fa4e6.setContent(html_12ed5d15834a8d6b7a1a231f2672693c);
+            
+        
+
+        circle_marker_17b40a1286ec9781a5f90c2d9756c82e.bindPopup(popup_9bb33acf9a786fceb45776c2ba5fa4e6)
+        ;
+
+        
+    
+    
+            circle_marker_17b40a1286ec9781a5f90c2d9756c82e.bindTooltip(
+                `&lt;div&gt;
+                     Troy : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_1309ff9a338e148f6bb4476fef56e65c = L.circleMarker(
+                [40.96, 25.37],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_d3984531519aa25b4fe3d49c59d93b37 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_13d6997a7fc5bc86f3f07c6b640e4c38 = $(`&lt;div id=&quot;html_13d6997a7fc5bc86f3f07c6b640e4c38&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_d3984531519aa25b4fe3d49c59d93b37.setContent(html_13d6997a7fc5bc86f3f07c6b640e4c38);
+            
+        
+
+        circle_marker_1309ff9a338e148f6bb4476fef56e65c.bindPopup(popup_d3984531519aa25b4fe3d49c59d93b37)
+        ;
+
+        
+    
+    
+            circle_marker_1309ff9a338e148f6bb4476fef56e65c.bindTooltip(
+                `&lt;div&gt;
+                     Ismarus : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_83087f9718adf5341024b28b656d0a40 = L.circleMarker(
+                [33.685817, 10.922214],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_ee7c5813918f9df29bb34a1038637b48 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_aaad5aa1d392bf3a7cf6ede893eccfdf = $(`&lt;div id=&quot;html_aaad5aa1d392bf3a7cf6ede893eccfdf&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_ee7c5813918f9df29bb34a1038637b48.setContent(html_aaad5aa1d392bf3a7cf6ede893eccfdf);
+            
+        
+
+        circle_marker_83087f9718adf5341024b28b656d0a40.bindPopup(popup_ee7c5813918f9df29bb34a1038637b48)
+        ;
+
+        
+    
+    
+            circle_marker_83087f9718adf5341024b28b656d0a40.bindTooltip(
+                `&lt;div&gt;
+                     Land of the Lotus-Eaters : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_66b2151e95d7c0be0a3c77d51c5c8dbe = L.circleMarker(
+                [37.7518, 14.9947],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_9e080fff157d7eb4642378bd29f91d96 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_88d5d1c465d58274a62939f23e435392 = $(`&lt;div id=&quot;html_88d5d1c465d58274a62939f23e435392&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_9e080fff157d7eb4642378bd29f91d96.setContent(html_88d5d1c465d58274a62939f23e435392);
+            
+        
+
+        circle_marker_66b2151e95d7c0be0a3c77d51c5c8dbe.bindPopup(popup_9e080fff157d7eb4642378bd29f91d96)
+        ;
+
+        
+    
+    
+            circle_marker_66b2151e95d7c0be0a3c77d51c5c8dbe.bindTooltip(
+                `&lt;div&gt;
+                     The Cyclopes : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_3f29f46fcb92fe9863d4b0dc18bb5fa1 = L.circleMarker(
+                [38.7917, 15.2139],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_0a1a52b68fe8d0290f81154edc20531b = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_b68773e03f60376a55e7b3a212796566 = $(`&lt;div id=&quot;html_b68773e03f60376a55e7b3a212796566&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_0a1a52b68fe8d0290f81154edc20531b.setContent(html_b68773e03f60376a55e7b3a212796566);
+            
+        
+
+        circle_marker_3f29f46fcb92fe9863d4b0dc18bb5fa1.bindPopup(popup_0a1a52b68fe8d0290f81154edc20531b)
+        ;
+
+        
+    
+    
+            circle_marker_3f29f46fcb92fe9863d4b0dc18bb5fa1.bindTooltip(
+                `&lt;div&gt;
+                     Aeolia : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_be02d018de39c34fac66aefc415bc43a = L.circleMarker(
+                [41.266667, 13.616667],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_8b07e2d9899a0c39dd7acc76b78dc0aa = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_9f93d72687b375ac7e38d83756cfbcd6 = $(`&lt;div id=&quot;html_9f93d72687b375ac7e38d83756cfbcd6&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_8b07e2d9899a0c39dd7acc76b78dc0aa.setContent(html_9f93d72687b375ac7e38d83756cfbcd6);
+            
+        
+
+        circle_marker_be02d018de39c34fac66aefc415bc43a.bindPopup(popup_8b07e2d9899a0c39dd7acc76b78dc0aa)
+        ;
+
+        
+    
+    
+            circle_marker_be02d018de39c34fac66aefc415bc43a.bindTooltip(
+                `&lt;div&gt;
+                     Laestrygonians : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_8c86f5ef1962ac1cfe309cef8497a8aa = L.circleMarker(
+                [41.237951, 13.04573],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_77ac9d98408934568dc5943ed3d10f42 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_caa5334bd3ab7da4fc50658d31b1351f = $(`&lt;div id=&quot;html_caa5334bd3ab7da4fc50658d31b1351f&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_77ac9d98408934568dc5943ed3d10f42.setContent(html_caa5334bd3ab7da4fc50658d31b1351f);
+            
+        
+
+        circle_marker_8c86f5ef1962ac1cfe309cef8497a8aa.bindPopup(popup_77ac9d98408934568dc5943ed3d10f42)
+        ;
+
+        
+    
+    
+            circle_marker_8c86f5ef1962ac1cfe309cef8497a8aa.bindTooltip(
+                `&lt;div&gt;
+                     Aeaea : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_53e458bf284e7463e2bc9bcf33960f78 = L.circleMarker(
+                [36.385, 22.48294],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_4b978774dda22b09b9e1e37fe2a22d5e = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_f296b807843f0b46e889d85ae79a7af4 = $(`&lt;div id=&quot;html_f296b807843f0b46e889d85ae79a7af4&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_4b978774dda22b09b9e1e37fe2a22d5e.setContent(html_f296b807843f0b46e889d85ae79a7af4);
+            
+        
+
+        circle_marker_53e458bf284e7463e2bc9bcf33960f78.bindPopup(popup_4b978774dda22b09b9e1e37fe2a22d5e)
+        ;
+
+        
+    
+    
+            circle_marker_53e458bf284e7463e2bc9bcf33960f78.bindTooltip(
+                `&lt;div&gt;
+                     The Underworld : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_a4226c7b560a259564779c4c7d7dcdc0 = L.circleMarker(
+                [40.583, 14.433],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_0f96021499cfce6aff61b982d50fee8b = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_85909e645c1f7aeb68a5a92054447569 = $(`&lt;div id=&quot;html_85909e645c1f7aeb68a5a92054447569&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_0f96021499cfce6aff61b982d50fee8b.setContent(html_85909e645c1f7aeb68a5a92054447569);
+            
+        
+
+        circle_marker_a4226c7b560a259564779c4c7d7dcdc0.bindPopup(popup_0f96021499cfce6aff61b982d50fee8b)
+        ;
+
+        
+    
+    
+            circle_marker_a4226c7b560a259564779c4c7d7dcdc0.bindTooltip(
+                `&lt;div&gt;
+                     Sirens Water : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_77ef8b339a082a9802f7f7a06e77f952 = L.circleMarker(
+                [38.2458, 15.6325],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_ddedc698cc350503662a0690741cb008 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_62abc8bb01c67d74ebedec95501c1a4f = $(`&lt;div id=&quot;html_62abc8bb01c67d74ebedec95501c1a4f&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_ddedc698cc350503662a0690741cb008.setContent(html_62abc8bb01c67d74ebedec95501c1a4f);
+            
+        
+
+        circle_marker_77ef8b339a082a9802f7f7a06e77f952.bindPopup(popup_ddedc698cc350503662a0690741cb008)
+        ;
+
+        
+    
+    
+            circle_marker_77ef8b339a082a9802f7f7a06e77f952.bindTooltip(
+                `&lt;div&gt;
+                     Scylla &amp; Charybdis : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_135b88de43f12a0aec3ddf86a5e5667e = L.circleMarker(
+                [36.4341, 28.2176],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_1219ddc7fbfeff6d1538ad6de9ce5350 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_d993dda526ccd824d49167c0dfcb2889 = $(`&lt;div id=&quot;html_d993dda526ccd824d49167c0dfcb2889&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_1219ddc7fbfeff6d1538ad6de9ce5350.setContent(html_d993dda526ccd824d49167c0dfcb2889);
+            
+        
+
+        circle_marker_135b88de43f12a0aec3ddf86a5e5667e.bindPopup(popup_1219ddc7fbfeff6d1538ad6de9ce5350)
+        ;
+
+        
+    
+    
+            circle_marker_135b88de43f12a0aec3ddf86a5e5667e.bindTooltip(
+                `&lt;div&gt;
+                     Helios Island : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_103e6774d42d89e703e398b6092d8b28 = L.circleMarker(
+                [36.0443, 14.2512],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_bafd1bd37f2063428d789d8610419e43 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_14bee7c69babc06eba978a678e203ad6 = $(`&lt;div id=&quot;html_14bee7c69babc06eba978a678e203ad6&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_bafd1bd37f2063428d789d8610419e43.setContent(html_14bee7c69babc06eba978a678e203ad6);
+            
+        
+
+        circle_marker_103e6774d42d89e703e398b6092d8b28.bindPopup(popup_bafd1bd37f2063428d789d8610419e43)
+        ;
+
+        
+    
+    
+            circle_marker_103e6774d42d89e703e398b6092d8b28.bindTooltip(
+                `&lt;div&gt;
+                     Ogygia : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_532d2d03f9fd9e5d34534cf658703ea8 = L.circleMarker(
+                [39.625, 19.9223],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_beafb89f6d62c479bdcc7f792fa8c294 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_40cb50da24b4a74ed0de6b6aa6a09360 = $(`&lt;div id=&quot;html_40cb50da24b4a74ed0de6b6aa6a09360&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_beafb89f6d62c479bdcc7f792fa8c294.setContent(html_40cb50da24b4a74ed0de6b6aa6a09360);
+            
+        
+
+        circle_marker_532d2d03f9fd9e5d34534cf658703ea8.bindPopup(popup_beafb89f6d62c479bdcc7f792fa8c294)
+        ;
+
+        
+    
+    
+            circle_marker_532d2d03f9fd9e5d34534cf658703ea8.bindTooltip(
+                `&lt;div&gt;
+                     Scheria : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_6c3ab9e7103f29a96f3636b657ca1400 = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_aa763aa185bb68fb73824765f7b45740 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_84b049df12deaa9c2fce3cee9d7b411e = $(`&lt;div id=&quot;html_84b049df12deaa9c2fce3cee9d7b411e&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Odysseus&lt;/div&gt;`)[0];
+                popup_aa763aa185bb68fb73824765f7b45740.setContent(html_84b049df12deaa9c2fce3cee9d7b411e);
+            
+        
+
+        circle_marker_6c3ab9e7103f29a96f3636b657ca1400.bindPopup(popup_aa763aa185bb68fb73824765f7b45740)
+        ;
+
+        
+    
+    
+            circle_marker_6c3ab9e7103f29a96f3636b657ca1400.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_15b43582dd7ab83e001231ed8bb22a3e = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_8e3b82c3c70db53d2edd0d8ed59fc962 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_cd6c0ec2769545a8ee9d264f146047ef = $(`&lt;div id=&quot;html_cd6c0ec2769545a8ee9d264f146047ef&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Athena&lt;/div&gt;`)[0];
+                popup_8e3b82c3c70db53d2edd0d8ed59fc962.setContent(html_cd6c0ec2769545a8ee9d264f146047ef);
+            
+        
+
+        circle_marker_15b43582dd7ab83e001231ed8bb22a3e.bindPopup(popup_8e3b82c3c70db53d2edd0d8ed59fc962)
+        ;
+
+        
+    
+    
+            circle_marker_15b43582dd7ab83e001231ed8bb22a3e.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_ae962074af7629b48fae700e9116b45f = L.circleMarker(
+                [40.0834, 22.3499],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_2ca99b46e4f009c7a2808c99f1a9eddf = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_0ded68119172920a5a57cedce7924bf5 = $(`&lt;div id=&quot;html_0ded68119172920a5a57cedce7924bf5&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Athena&lt;/div&gt;`)[0];
+                popup_2ca99b46e4f009c7a2808c99f1a9eddf.setContent(html_0ded68119172920a5a57cedce7924bf5);
+            
+        
+
+        circle_marker_ae962074af7629b48fae700e9116b45f.bindPopup(popup_2ca99b46e4f009c7a2808c99f1a9eddf)
+        ;
+
+        
+    
+    
+            circle_marker_ae962074af7629b48fae700e9116b45f.bindTooltip(
+                `&lt;div&gt;
+                     Olympus : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_940d46bb4e927954be0ee74b940cb24d = L.circleMarker(
+                [39.625, 19.9223],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_134cc882be0d1c50399c0f0e2bd327fe = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_bcbf909cd4e2a5b1ae58300cbb2e2d6b = $(`&lt;div id=&quot;html_bcbf909cd4e2a5b1ae58300cbb2e2d6b&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Athena&lt;/div&gt;`)[0];
+                popup_134cc882be0d1c50399c0f0e2bd327fe.setContent(html_bcbf909cd4e2a5b1ae58300cbb2e2d6b);
+            
+        
+
+        circle_marker_940d46bb4e927954be0ee74b940cb24d.bindPopup(popup_134cc882be0d1c50399c0f0e2bd327fe)
+        ;
+
+        
+    
+    
+            circle_marker_940d46bb4e927954be0ee74b940cb24d.bindTooltip(
+                `&lt;div&gt;
+                     Scheria : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_e83bc5efc1dff5268187010ae1ce3f30 = L.circleMarker(
+                [40.0834, 22.3499],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_0180d986e294fc51f77f3185e558ae7c = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_a57598cc2628fecfbca2467271505a6e = $(`&lt;div id=&quot;html_a57598cc2628fecfbca2467271505a6e&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Zeus&lt;/div&gt;`)[0];
+                popup_0180d986e294fc51f77f3185e558ae7c.setContent(html_a57598cc2628fecfbca2467271505a6e);
+            
+        
+
+        circle_marker_e83bc5efc1dff5268187010ae1ce3f30.bindPopup(popup_0180d986e294fc51f77f3185e558ae7c)
+        ;
+
+        
+    
+    
+            circle_marker_e83bc5efc1dff5268187010ae1ce3f30.bindTooltip(
+                `&lt;div&gt;
+                     Olympus : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_22257e267de9ab8fe616053ab29cd775 = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_9be26033bf7b52dcec4e8c601776ec26 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_b0e73e75f88637a72a29c7f78091b949 = $(`&lt;div id=&quot;html_b0e73e75f88637a72a29c7f78091b949&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Telemachus&lt;/div&gt;`)[0];
+                popup_9be26033bf7b52dcec4e8c601776ec26.setContent(html_b0e73e75f88637a72a29c7f78091b949);
+            
+        
+
+        circle_marker_22257e267de9ab8fe616053ab29cd775.bindPopup(popup_9be26033bf7b52dcec4e8c601776ec26)
+        ;
+
+        
+    
+    
+            circle_marker_22257e267de9ab8fe616053ab29cd775.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_1d9b1ddb12cc95861ee4a3856eab3368 = L.circleMarker(
+                [36.9131, 21.6963],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_1e1d27743799af16432fd461b9afac0c = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_90ad4b79372fc390d419ba5fa2d9f84e = $(`&lt;div id=&quot;html_90ad4b79372fc390d419ba5fa2d9f84e&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Telemachus&lt;/div&gt;`)[0];
+                popup_1e1d27743799af16432fd461b9afac0c.setContent(html_90ad4b79372fc390d419ba5fa2d9f84e);
+            
+        
+
+        circle_marker_1d9b1ddb12cc95861ee4a3856eab3368.bindPopup(popup_1e1d27743799af16432fd461b9afac0c)
+        ;
+
+        
+    
+    
+            circle_marker_1d9b1ddb12cc95861ee4a3856eab3368.bindTooltip(
+                `&lt;div&gt;
+                     Pylos : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_3418d9e0a443ab970806cfc085081231 = L.circleMarker(
+                [37.04, 22.43],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_47085d18355ea7190c442db913cf5fa1 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_508c2b9e3cb8957274676acf0c42c87f = $(`&lt;div id=&quot;html_508c2b9e3cb8957274676acf0c42c87f&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Telemachus&lt;/div&gt;`)[0];
+                popup_47085d18355ea7190c442db913cf5fa1.setContent(html_508c2b9e3cb8957274676acf0c42c87f);
+            
+        
+
+        circle_marker_3418d9e0a443ab970806cfc085081231.bindPopup(popup_47085d18355ea7190c442db913cf5fa1)
+        ;
+
+        
+    
+    
+            circle_marker_3418d9e0a443ab970806cfc085081231.bindTooltip(
+                `&lt;div&gt;
+                     Sparta : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_ec1f9e3a8b2f8091ecc494a3c2ffb789 = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_b2fc8620af7c737111bcfef3af0b941b = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_909c9f78ee71705f0874c727ae1fd47f = $(`&lt;div id=&quot;html_909c9f78ee71705f0874c727ae1fd47f&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Telemachus&lt;/div&gt;`)[0];
+                popup_b2fc8620af7c737111bcfef3af0b941b.setContent(html_909c9f78ee71705f0874c727ae1fd47f);
+            
+        
+
+        circle_marker_ec1f9e3a8b2f8091ecc494a3c2ffb789.bindPopup(popup_b2fc8620af7c737111bcfef3af0b941b)
+        ;
+
+        
+    
+    
+            circle_marker_ec1f9e3a8b2f8091ecc494a3c2ffb789.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_a27350738f270a3e16aa239459273f95 = L.circleMarker(
+                [39.625, 19.9223],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_5237eddbaeb1f9f7f3d0c0077d793f01 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_7f6b6fd32b4b4a88f881b0bd34abb102 = $(`&lt;div id=&quot;html_7f6b6fd32b4b4a88f881b0bd34abb102&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Poseidon&lt;/div&gt;`)[0];
+                popup_5237eddbaeb1f9f7f3d0c0077d793f01.setContent(html_7f6b6fd32b4b4a88f881b0bd34abb102);
+            
+        
+
+        circle_marker_a27350738f270a3e16aa239459273f95.bindPopup(popup_5237eddbaeb1f9f7f3d0c0077d793f01)
+        ;
+
+        
+    
+    
+            circle_marker_a27350738f270a3e16aa239459273f95.bindTooltip(
+                `&lt;div&gt;
+                     Scheria : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_cfd3156390bbf6de26fced19edab30ff = L.circleMarker(
+                [9.145, 40.4897],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_24c4792122c7e93a1297f912665f4168 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_c34476f70c9c40ea727aa62d731c9244 = $(`&lt;div id=&quot;html_c34476f70c9c40ea727aa62d731c9244&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Poseidon&lt;/div&gt;`)[0];
+                popup_24c4792122c7e93a1297f912665f4168.setContent(html_c34476f70c9c40ea727aa62d731c9244);
+            
+        
+
+        circle_marker_cfd3156390bbf6de26fced19edab30ff.bindPopup(popup_24c4792122c7e93a1297f912665f4168)
+        ;
+
+        
+    
+    
+            circle_marker_cfd3156390bbf6de26fced19edab30ff.bindTooltip(
+                `&lt;div&gt;
+                     Ethiopia : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_7e3628bcabcc8505f4eb2b76372441c5 = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_fbbae1752f951a20747d97b934995bbf = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_23bf795aa3f2ae7fa58df9b212b6a8ee = $(`&lt;div id=&quot;html_23bf795aa3f2ae7fa58df9b212b6a8ee&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Penelope&lt;/div&gt;`)[0];
+                popup_fbbae1752f951a20747d97b934995bbf.setContent(html_23bf795aa3f2ae7fa58df9b212b6a8ee);
+            
+        
+
+        circle_marker_7e3628bcabcc8505f4eb2b76372441c5.bindPopup(popup_fbbae1752f951a20747d97b934995bbf)
+        ;
+
+        
+    
+    
+            circle_marker_7e3628bcabcc8505f4eb2b76372441c5.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_b831f5fa5077848dc1f75223f8499c89 = L.circleMarker(
+                [37.04, 22.43],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_56b08f95c6470c4d23ab01198478c348 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_63ad0aaccbffe236c191d94d35852838 = $(`&lt;div id=&quot;html_63ad0aaccbffe236c191d94d35852838&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Menelaus&lt;/div&gt;`)[0];
+                popup_56b08f95c6470c4d23ab01198478c348.setContent(html_63ad0aaccbffe236c191d94d35852838);
+            
+        
+
+        circle_marker_b831f5fa5077848dc1f75223f8499c89.bindPopup(popup_56b08f95c6470c4d23ab01198478c348)
+        ;
+
+        
+    
+    
+            circle_marker_b831f5fa5077848dc1f75223f8499c89.bindTooltip(
+                `&lt;div&gt;
+                     Sparta : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_31538353ecb5fb474b595667b9f48ff6 = L.circleMarker(
+                [36.0443, 14.2512],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_4e2a20404994127fac4071af0bdc8d35 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_683bbb48673d1fbab45e16bf56823394 = $(`&lt;div id=&quot;html_683bbb48673d1fbab45e16bf56823394&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Calypso&lt;/div&gt;`)[0];
+                popup_4e2a20404994127fac4071af0bdc8d35.setContent(html_683bbb48673d1fbab45e16bf56823394);
+            
+        
+
+        circle_marker_31538353ecb5fb474b595667b9f48ff6.bindPopup(popup_4e2a20404994127fac4071af0bdc8d35)
+        ;
+
+        
+    
+    
+            circle_marker_31538353ecb5fb474b595667b9f48ff6.bindTooltip(
+                `&lt;div&gt;
+                     Ogygia : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_ef17c248e7d9459096625fe81490ffa4 = L.circleMarker(
+                [41.237951, 13.04573],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_605e227ea92a57de5fdad96afd30010a = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_340477d524cf51d5b8376760c3998d25 = $(`&lt;div id=&quot;html_340477d524cf51d5b8376760c3998d25&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Circe&lt;/div&gt;`)[0];
+                popup_605e227ea92a57de5fdad96afd30010a.setContent(html_340477d524cf51d5b8376760c3998d25);
+            
+        
+
+        circle_marker_ef17c248e7d9459096625fe81490ffa4.bindPopup(popup_605e227ea92a57de5fdad96afd30010a)
+        ;
+
+        
+    
+    
+            circle_marker_ef17c248e7d9459096625fe81490ffa4.bindTooltip(
+                `&lt;div&gt;
+                     Aeaea : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_90ad0aa8074216f64a654b481ecc320d = L.circleMarker(
+                [39.625, 19.9223],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_e1bc10253b26fd262110cd1c388bb853 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_17d5d655d897764aab1be486a69a7f15 = $(`&lt;div id=&quot;html_17d5d655d897764aab1be486a69a7f15&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Nausicaa&lt;/div&gt;`)[0];
+                popup_e1bc10253b26fd262110cd1c388bb853.setContent(html_17d5d655d897764aab1be486a69a7f15);
+            
+        
+
+        circle_marker_90ad0aa8074216f64a654b481ecc320d.bindPopup(popup_e1bc10253b26fd262110cd1c388bb853)
+        ;
+
+        
+    
+    
+            circle_marker_90ad0aa8074216f64a654b481ecc320d.bindTooltip(
+                `&lt;div&gt;
+                     Scheria : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_0ea0aec5e144203cb965da1cacac6888 = L.circleMarker(
+                [37.7518, 14.9947],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#ff3355&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#ff3355&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_c05c286c310bc6c398c598cd6a2d3df3 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_385e38b8f42abf29cb7b9b491ce1b348 = $(`&lt;div id=&quot;html_385e38b8f42abf29cb7b9b491ce1b348&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Polyphemus&lt;/div&gt;`)[0];
+                popup_c05c286c310bc6c398c598cd6a2d3df3.setContent(html_385e38b8f42abf29cb7b9b491ce1b348);
+            
+        
+
+        circle_marker_0ea0aec5e144203cb965da1cacac6888.bindPopup(popup_c05c286c310bc6c398c598cd6a2d3df3)
+        ;
+
+        
+    
+    
+            circle_marker_0ea0aec5e144203cb965da1cacac6888.bindTooltip(
+                `&lt;div&gt;
+                     The Cyclopes : Mythical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_422e09a9f1226cade36697dcf1543021 = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_cf296684881e8ba699a34ca00afcbfad = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_5de11fa2d49e9e4f90f8671887b48b4b = $(`&lt;div id=&quot;html_5de11fa2d49e9e4f90f8671887b48b4b&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Eumaeus&lt;/div&gt;`)[0];
+                popup_cf296684881e8ba699a34ca00afcbfad.setContent(html_5de11fa2d49e9e4f90f8671887b48b4b);
+            
+        
+
+        circle_marker_422e09a9f1226cade36697dcf1543021.bindPopup(popup_cf296684881e8ba699a34ca00afcbfad)
+        ;
+
+        
+    
+    
+            circle_marker_422e09a9f1226cade36697dcf1543021.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_4006b34573dbc3276d17a4a7d7d3cbdb = L.circleMarker(
+                [38.42854, 20.6765],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_e48e28cade2d26ec60ae8dfe1eaeabb5 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_049d41c25972269f3171b5f1b1254f3e = $(`&lt;div id=&quot;html_049d41c25972269f3171b5f1b1254f3e&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Antinous&lt;/div&gt;`)[0];
+                popup_e48e28cade2d26ec60ae8dfe1eaeabb5.setContent(html_049d41c25972269f3171b5f1b1254f3e);
+            
+        
+
+        circle_marker_4006b34573dbc3276d17a4a7d7d3cbdb.bindPopup(popup_e48e28cade2d26ec60ae8dfe1eaeabb5)
+        ;
+
+        
+    
+    
+            circle_marker_4006b34573dbc3276d17a4a7d7d3cbdb.bindTooltip(
+                `&lt;div&gt;
+                     Ithaca : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_2e5d46dfdcf9f38ae9704183af131fba = L.circleMarker(
+                [37.04, 22.43],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#5D3FD3&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;#5D3FD3&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 5, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+        var popup_1649ff1494a4c8eeb10740b627c5ac57 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
+});
+
+        
+            
+                var html_07caadf0c80d9323e669515e26cbe2f0 = $(`&lt;div id=&quot;html_07caadf0c80d9323e669515e26cbe2f0&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Helen&lt;/div&gt;`)[0];
+                popup_1649ff1494a4c8eeb10740b627c5ac57.setContent(html_07caadf0c80d9323e669515e26cbe2f0);
+            
+        
+
+        circle_marker_2e5d46dfdcf9f38ae9704183af131fba.bindPopup(popup_1649ff1494a4c8eeb10740b627c5ac57)
+        ;
+
+        
+    
+    
+            circle_marker_2e5d46dfdcf9f38ae9704183af131fba.bindTooltip(
+                `&lt;div&gt;
+                     Sparta : Physical
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            tile_layer_c6fb24a9d68e06226ec2651870418468.addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+            tile_layer_c6fb24a9d68e06226ec2651870418468.addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+    
+            tile_layer_c6fb24a9d68e06226ec2651870418468.addTo(map_d1552fa9d2a1aa7937ebf9798a204e65);
+        
+&lt;/script&gt;
+&lt;/html&gt;" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div>
+            </div>
+        </div>
+
+        <div class="card full-width">
+            <h2>Locations with most figures</h2>
+            <p>Sorted by locations that have the most associated figures.</p>
+            <div class="plotly-graph">
+                <div>                            <div id="19c89c7d-8008-456a-8ab8-f101ac5aa692" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("19c89c7d-8008-456a-8ab8-f101ac5aa692")) {                    Plotly.newPlot(                        "19c89c7d-8008-456a-8ab8-f101ac5aa692",                        [{"alignmentgroup":"True","hovertemplate":"fig_count=%{text}\u003cbr\u003eLocation=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","marker":{"color":"#2288b3","pattern":{"shape":""}},"name":"","offsetgroup":"","orientation":"h","showlegend":false,"text":[6.0,4.0,3.0,2.0,2.0,2.0,2.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],"textposition":"auto","x":[6,4,3,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1],"xaxis":"x","y":["Ithaca","Scheria","Sparta","Aeaea","Ogygia","Olympus","The Cyclopes","Aeolia","Ismarus","Ethiopia","Laestrygonians","Land of the Lotus-Eaters","Helios Island","Pylos","Sirens Water","Scylla & Charybdis","The Underworld","Troy"],"yaxis":"y","type":"bar"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"rgb(17,17,17)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#f2f5fa"},"error_y":{"color":"#f2f5fa"},"marker":{"line":{"color":"rgb(17,17,17)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#A2B1C6","gridcolor":"#506784","linecolor":"#506784","minorgridcolor":"#506784","startlinecolor":"#A2B1C6"},"baxis":{"endlinecolor":"#A2B1C6","gridcolor":"#506784","linecolor":"#506784","minorgridcolor":"#506784","startlinecolor":"#A2B1C6"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmapgl":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmapgl"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"line":{"color":"#283442"}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"marker":{"line":{"color":"#283442"}},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#506784"},"line":{"color":"rgb(17,17,17)"}},"header":{"fill":{"color":"#2a3f5f"},"line":{"color":"rgb(17,17,17)"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#f2f5fa","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#f2f5fa"},"geo":{"bgcolor":"rgb(17,17,17)","lakecolor":"rgb(17,17,17)","landcolor":"rgb(17,17,17)","showlakes":true,"showland":true,"subunitcolor":"#506784"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"dark"},"paper_bgcolor":"rgb(17,17,17)","plot_bgcolor":"rgb(17,17,17)","polar":{"angularaxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""},"bgcolor":"rgb(17,17,17)","radialaxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"rgb(17,17,17)","gridcolor":"#506784","gridwidth":2,"linecolor":"#506784","showbackground":true,"ticks":"","zerolinecolor":"#C8D4E3"},"yaxis":{"backgroundcolor":"rgb(17,17,17)","gridcolor":"#506784","gridwidth":2,"linecolor":"#506784","showbackground":true,"ticks":"","zerolinecolor":"#C8D4E3"},"zaxis":{"backgroundcolor":"rgb(17,17,17)","gridcolor":"#506784","gridwidth":2,"linecolor":"#506784","showbackground":true,"ticks":"","zerolinecolor":"#C8D4E3"}},"shapedefaults":{"line":{"color":"#f2f5fa"}},"sliderdefaults":{"bgcolor":"#C8D4E3","bordercolor":"rgb(17,17,17)","borderwidth":1,"tickwidth":0},"ternary":{"aaxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""},"baxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""},"bgcolor":"rgb(17,17,17)","caxis":{"gridcolor":"#506784","linecolor":"#506784","ticks":""}},"title":{"x":0.05},"updatemenudefaults":{"bgcolor":"#506784","borderwidth":0},"xaxis":{"automargin":true,"gridcolor":"#283442","linecolor":"#506784","ticks":"","title":{"standoff":15},"zerolinecolor":"#283442","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"#283442","linecolor":"#506784","ticks":"","title":{"standoff":15},"zerolinecolor":"#283442","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Amount of Figures"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Location"},"autorange":"reversed"},"legend":{"tracegroupgap":0},"title":{"text":"Locations with Most Figures","x":0.5},"barmode":"relative"},                        {"responsive": true}                    )                };                            </script>        </div>
+            </div>
+        </div>
+
+        <div class="card full-width">
+            <h2>Connecting Figures to Locations</h2>
+            <p>Node graph of all figures and locations connected to them. Larger nodes have more connections. Click and drag to interact.</p>
+            <iframe src="mythical_figures_graph.html" class="graph-container"></iframe>
+        </div>
+
+        <div class="card full-width">
+            <h2>Odysseus' Journey</h2>
+            <p>Path in the order that Odysseus traveled. Hover points for more information, including descriptions. Path starts at Troy (top right).</p>
+            <div class="plotly-map">
+                <div>                            <div id="4f144f6e-0cf9-4dc5-84f3-7166c2b07761" class="plotly-graph-div" style="height:650px; width:100%;"></div>            <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("4f144f6e-0cf9-4dc5-84f3-7166c2b07761")) {                    Plotly.newPlot(                        "4f144f6e-0cf9-4dc5-84f3-7166c2b07761",                        [{"customdata":[["Odysseus","Odysseus start of his journey"],["Odysseus","Odysseus goes to the Cicones in Ismarus."],["Odysseus","Odysseys goes to the island where the Lotus-Eaters are"],["Odysseus","Odysseus visits the Cyclops"],["Odysseus","Aeolus gives Odysseys a bag of winds"],["Odysseus","Odysseus visits Laestrygonia"],["Odysseus","Odysseus visits Circe at Aeaea"],["Odysseus","Odysseus is told to go to Hades\u002fThe Underworld"],["Odysseus","Odysseys travels by the Sirens and hears their singing"],["Odysseus","Odysseus and his men pass by Scylla & Charybdis"],["Odysseus","Odysseus and his men reach Helios' Island"],["Odysseus","Odysseus drifts to Ogygia"],["Odysseus","Odysseus is brought to Scheria by Nausithous"],["Odysseus","Odysseus finally gets back home"]],"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eLocation=%{text}\u003cbr\u003eLat=%{lat}\u003cbr\u003eLon=%{lon}\u003cbr\u003eFigure=%{customdata[0]}\u003cbr\u003eDescription=%{customdata[1]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Troy","Ismarus","Land of the Lotus-Eaters","The Cyclopes","Aeolia","Laestrygonians","Aeaea","The Underworld","Sirens Water","Scylla & Charybdis","Helios Island","Ogygia","Scheria","Ithaca"],"lat":[39.9575,40.96,33.685817,37.7518,38.7917,41.266667,41.237951,36.385,40.583,38.2458,36.4341,36.0443,39.625,38.42854],"legendgroup":"","line":{"color":"#2288b3"},"lon":[26.2389,25.37,10.922214,14.9947,15.2139,13.616667,13.04573,22.48294,14.433,15.6325,28.2176,14.2512,19.9223,20.6765],"mode":"lines+markers+text","name":"","showlegend":false,"subplot":"mapbox","text":["Troy","Ismarus","Land of the Lotus-Eaters","The Cyclopes","Aeolia","Laestrygonians","Aeaea","The Underworld","Sirens Water","Scylla & Charybdis","Helios Island","Ogygia","Scheria","Ithaca"],"type":"scattermapbox"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"mapbox":{"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"center":{"lat":38.52836964285715,"lon":18.215582214285714},"zoom":4.5,"style":"carto-darkmatter"},"legend":{"tracegroupgap":0},"margin":{"t":60},"height":650},                        {"responsive": true}                    )                };                            </script>        </div>
+            </div>
+        </div>
+
+        <div class="card full-width">
+            <h2>Animation of Odysseus' Journey</h2>
+            <p>Odysseus' stops individually mapped in order.</p>
+            <iframe src="odysseus_trav_animation.html" class="graph-container"></iframe>
+        </div>
+
+        <div class="card full-width">
+             <h2>Conclusion</h2>
+             <p>The results of these visuals conclude that Odysseus, expectedly, had the most connections with each location and character.
+             It is clear with the travel maps that he went back and forth many times across the area, given that the mythical locations are similar to where they would actually be.
+             The location chart distinguishes three of the most connected locations: Ithaca, Scheria, and Sparta. Then it disbands into 2 groups of one and two figures per location.
+             In the node graph, you can make out that Odysseus, Ithaca, Scheria, Athena, Sparta, and Telemachus were some of the more prominent characters and locations.
+             This doesn't lower the importance of all other characters and locations, but it highlights which ones were most connected.
+             Overall, the graphs display an insightful view of how the Odyssey's relationships span.</p>
+                </div>
+    </div>
+</body>
+</html>
